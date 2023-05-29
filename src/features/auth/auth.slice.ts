@@ -1,14 +1,14 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { authApi } from './auth.api.ts';
-
+import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {authApi, LoginAuthType} from './auth.api.ts';
 
 
 const slice = createSlice({
     name: 'auth',
-    initialState: {},
+    initialState: {
+        isLoggedIn: false
+    },
     reducers: {},
 });
-
 
 
 const registerUser = createAsyncThunk(
@@ -22,6 +22,17 @@ const registerUser = createAsyncThunk(
         }
     }
 );
+const loginUser = createAsyncThunk(
+    "auth/login",
+    async (data:LoginAuthType, thunkAPI)=>{
+        try {
+            const response = await authApi.login(data)
+            console.log(response.data)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+)
 
 export const authReducer = slice.reducer;
-export const authThunks = { registerUser };
+export const authThunks = {registerUser, loginUser};

@@ -8,6 +8,7 @@ const slice = createSlice({
     reducers: {},
 })
 
+// eslint-disable-next-line no-empty-pattern
 const {} = slice.actions
 
 
