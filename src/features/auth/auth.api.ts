@@ -17,7 +17,7 @@ export type LoginAuthType = {
     password: string,
     rememberMe: boolean,
 }
-type ProfileType = {
+export type ProfileType = {
     _id: string;
     email: string;
     name: string;

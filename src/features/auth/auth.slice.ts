@@ -1,13 +1,21 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {authApi, LoginAuthType} from './auth.api.ts';
+import {createAppAsyncThunk} from "src/app/common/utils/create-app-async-thunk.ts";
+import {authApi, LoginAuthType, ProfileType} from './auth.api.ts';
 
 
 const slice = createSlice({
     name: 'auth',
     initialState: {
-        isLoggedIn: false
+        profile: null as ProfileType | null
     },
     reducers: {},
+    extraReducers: (builder) => {
+        builder.addCase(loginUser.fulfilled, (state, action) => {
+            if (action.payload?.profile) {
+                state.profile = action.payload.profile;
+            }
+        });
+    },
 });
 
 
@@ -22,12 +30,12 @@ const registerUser = createAsyncThunk(
         }
     }
 );
-const loginUser = createAsyncThunk(
+const loginUser = createAppAsyncThunk<{ profile: ProfileType }, LoginAuthType>(
     "auth/login",
-    async (data:LoginAuthType, thunkAPI)=>{
+    async (data: LoginAuthType, thunkAPI) => {
         try {
             const response = await authApi.login(data)
-            console.log(response.data)
+            return {profile: response.data};
         } catch (error) {
             console.log(error)
         }
