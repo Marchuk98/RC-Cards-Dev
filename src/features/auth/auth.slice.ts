@@ -1,5 +1,4 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {createAppAsyncThunk} from "src/app/common/utils/create-app-async-thunk.ts";
 import {authApi, LoginAuthType, ProfileType} from './auth.api.ts';
 
 
@@ -30,7 +29,7 @@ const registerUser = createAsyncThunk(
         }
     }
 );
-const loginUser = createAppAsyncThunk<{ profile: ProfileType }, LoginAuthType>(
+const loginUser = createAsyncThunk(
     "auth/login",
     async (data: LoginAuthType, thunkAPI) => {
         try {
