@@ -1,26 +1,31 @@
-import {StatusType} from "../common/type/types.ts";
-import {createSlice} from "@reduxjs/toolkit";
-
+import { StatusType } from "../common/type/types.ts";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type AppInitialStateType = {
-    error:string | null
-    status:StatusType
-}
+    error: string | null;
+    status: StatusType;
+};
 
-const initialState:AppInitialStateType = {
-    error:null,
-    status:"idle",
-}
+const initialState: AppInitialStateType = {
+    error: null,
+    status: "loading",
+};
 
 const appSlice = createSlice({
-    name:"app",
+    name: "app",
     initialState,
-    reducers:{},
-    extraReducers:builder => {
-     builder
+    reducers: {
+        setError: (state, action: PayloadAction<string>) => {
+            state.error = action.payload;
+        },
+        resetError: (state) => {
+            state.error = null;
+        },
+        setStatus: (state, action: PayloadAction<StatusType>) => {
+            state.status = action.payload;
+        },
+    },
+});
 
-    }
-})
-
-
-export const {reducer:appReducer,actions:appActions} = appSlice
+export const { setError, resetError, setStatus } = appSlice.actions;
+export const { reducer: appReducer, actions: appActions } = appSlice;
