@@ -45,7 +45,7 @@ export const Register = () => {
 
     return (
         <ThemeProvider theme={defaultTheme}>
-            <Paper elevation={3} sx={{padding: "25px"}}>
+            <Paper sx={{padding: "25px",margin:'50px auto',maxWidth: "413px"}}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline/>
                     <Box
@@ -67,6 +67,7 @@ export const Register = () => {
                                         id="email"
                                         label="Email"
                                         autoComplete="email"
+                                        variant="standard"
                                         {...register('email', {
                                             required: 'Email is required',
                                             pattern: {value: /^\S+@\S+$/i, message: 'Invalid email'}
@@ -82,6 +83,7 @@ export const Register = () => {
                                         label="Password"
                                         type="password"
                                         autoComplete="current-password"
+                                        variant="standard"
                                         {...register('password', {required: 'Password is required'})}
                                         error={!!errors.password}
                                         helperText={errors.password?.message}
@@ -94,6 +96,7 @@ export const Register = () => {
                                         label="Confirm Password"
                                         type="password"
                                         autoComplete="Confirm Password"
+                                        variant="standard"
                                         {...register('confirmPassword', {
                                             required: 'Please confirm your password',
                                             validate: value => value === getValues('password') || 'Passwords do not match'
