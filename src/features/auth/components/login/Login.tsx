@@ -103,7 +103,7 @@ export const Login = () => {
                                 autoComplete="current-password"
                                 {...register("password", {
                                     required: "Password is required",
-                                    minLength: { value: 8, message: "Password should be more then 8" }
+                                    minLength: { value: 7, message: "Password should be more then 7" }
                                 })}
                                 error={!!errors.password}
                                 helperText={errors.password?.message}
