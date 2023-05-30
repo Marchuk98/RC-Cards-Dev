@@ -1,5 +1,6 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {authApi, LoginAuthType} from './auth.api.ts';
+import {errorUtils} from "../../common/utils/error-utils.ts";
+import {authApi, LoginAuthType, ProfileType} from './auth.api.ts';
 
 
 const slice = createSlice({
@@ -33,7 +34,7 @@ const registerUser = createAsyncThunk(
 
 const loginUser = createAsyncThunk(
     "auth/login",
-    async (data: LoginAuthType, thunkAPI) => {
+    async (data: LoginAuthType) => {
         try {
             const response = await authApi.login(data)
             return {profile: response.data};
