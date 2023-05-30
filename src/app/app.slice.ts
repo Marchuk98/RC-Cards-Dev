@@ -8,7 +8,7 @@ type AppInitialStateType = {
 
 const initialState: AppInitialStateType = {
     error: null,
-    status: "loading",
+    status: "idle",
 };
 
 const appSlice = createSlice({
@@ -18,14 +18,11 @@ const appSlice = createSlice({
         setError: (state, action: PayloadAction<string>) => {
             state.error = action.payload;
         },
-        resetError: (state) => {
-            state.error = null;
-        },
         setStatus: (state, action: PayloadAction<StatusType>) => {
             state.status = action.payload;
         },
     },
 });
 
-export const { setError, resetError, setStatus } = appSlice.actions;
+export const { setError, setStatus } = appSlice.actions;
 export const { reducer: appReducer, actions: appActions } = appSlice;

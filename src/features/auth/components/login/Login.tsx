@@ -63,7 +63,7 @@ export const Login = () => {
     return (
         <ThemeProvider theme={defaultTheme}>
             <Paper elevation={3} sx={{
-                padding: "25px"
+                padding: "25px",margin:'50px auto',maxWidth: "413px"
             }}>
                 <Container component="main" maxWidth="xs">
                     <CssBaseline/>
@@ -87,6 +87,7 @@ export const Login = () => {
                                 label="Email Address"
                                 autoComplete="email"
                                 autoFocus
+                                variant="standard"
                                 {...register("email", {
                                     required: "Email is required",
                                     pattern: {value: /^\S+@\S+$/i, message: 'Invalid email'}
@@ -103,6 +104,7 @@ export const Login = () => {
                                 type="password"
                                 id="password"
                                 autoComplete="current-password"
+                                variant="standard"
                                 {...register("password", {
                                     required: "Password is required",
                                     minLength: {value: 7, message: "Password should be more then 7"}

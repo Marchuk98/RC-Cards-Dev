@@ -30,7 +30,7 @@ export const ForgotPassword = () => {
         dispatch(authThunks.forgot({...data, ...developers}));
     };
   return (
-          <Paper elevation={3} sx={{padding: "25px"}}>
+          <Paper elevation={3} sx={{padding: "25px",margin:'50px auto',maxWidth: "413px"}}>
               <Container component="main"  >
                   <CssBaseline/>
                   <Box
@@ -54,6 +54,7 @@ export const ForgotPassword = () => {
                               id="email"
                               label="Email"
                               autoComplete="email"
+                              variant="standard"
                               {...register('email', {
                                   required: 'Email is required',
                                   pattern: {value: /^\S+@\S+$/i, message: 'Invalid email'}

@@ -13,7 +13,7 @@ export const authApi = {
     },
 }
 
-type RegisterAuthType = Omit<LoginAuthType, 'rememberMe'>
+export type RegisterAuthType = Omit<LoginAuthType, 'rememberMe'>
 
 export type LoginAuthType = {
     email: string,
