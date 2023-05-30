@@ -1,5 +1,5 @@
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Button from '@mui/material/Button';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -11,6 +11,7 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {useForm} from "react-hook-form";
+import {useNavigate} from "react-router-dom";
 import {useAppDispatch} from "../../../../app/hooks.ts";
 import {authThunks} from "../../auth.slice.ts";
 
@@ -35,6 +36,7 @@ export const Copyright = (props: any) => (
 const defaultTheme = createTheme();
 
 export const Login = () => {
+    const navigate = useNavigate();
     const dispatch = useAppDispatch()
     const form = useForm<FormValues>({
         defaultValues: {
@@ -103,7 +105,7 @@ export const Login = () => {
                                 autoComplete="current-password"
                                 {...register("password", {
                                     required: "Password is required",
-                                    minLength: { value: 7, message: "Password should be more then 7" }
+                                    minLength: {value: 7, message: "Password should be more then 7"}
                                 })}
                                 error={!!errors.password}
                                 helperText={errors.password?.message}
@@ -124,12 +126,12 @@ export const Login = () => {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link href="#" variant="body2">
+                                    <Link onClick={()=>navigate("/forgotPassword")} href="#" variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link href={"#"} onClick={()=>navigate("/register")} variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>

@@ -1,12 +1,13 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {errorUtils} from "../../common/utils/error-utils.ts";
-import {authApi, LoginAuthType, ProfileType} from './auth.api.ts';
+import {authApi, ForgotEmailDataType, LoginAuthType, ProfileType} from './auth.api.ts';
 
 
 const slice = createSlice({
     name: 'auth',
     initialState: {
-        profile: null as ProfileType | null
+        profile: null as ProfileType | null,
+        isMailSent: false
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -14,7 +15,11 @@ const slice = createSlice({
             if (action.payload?.profile) {
                 state.profile = action.payload.profile;
             }
-        });
+        })
+            .addCase(forgot.fulfilled, (state, action)=>{
+                state.isMailSent = action.payload.isMailSent
+            })
+        ;
     },
 });
 
@@ -43,6 +48,18 @@ const loginUser = createAsyncThunk(
         }
     }
 )
+const forgot = createAsyncThunk(
+    "auth/forgot",
+    async(data:ForgotEmailDataType, {rejectWithValue})=>{
+        try {
+            const response = await authApi.forgot(data)
+            return {...response.data, isMailSent: true}
+        } catch (e){
+            const error = errorUtils(e)
+            return rejectWithValue(error)
+        }
+    }
+)
 
 export const authReducer = slice.reducer;
-export const authThunks = {registerUser, loginUser};
+export const authThunks = {registerUser, loginUser, forgot};
