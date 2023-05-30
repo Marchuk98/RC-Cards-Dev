@@ -3,7 +3,7 @@ import {instance} from "../../common/api/api.ts";
 
 export const authApi = {
     register: (data: RegisterAuthType) => {
-        return instance.post('auth/register', data)
+        return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
     },
     login: (data: LoginAuthType) => {
         return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("auth/login", data)
