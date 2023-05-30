@@ -117,7 +117,7 @@ export const Register = () => {
                             </Typography>
                             <Grid container justifyContent="center">
                                 <Grid item>
-                                    <Link href="#" variant="body2">
+                                    <Link onClick={()=>navigate("/login")} href="#" variant="body2">
                                          Sign in
                                     </Link>
                                 </Grid>

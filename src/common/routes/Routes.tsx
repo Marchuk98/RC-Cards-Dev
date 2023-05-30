@@ -37,4 +37,12 @@ export const router = createHashRouter([
             },
         ],
     },
+    {
+        path: "/forgotPassword",
+        element: <ForgotPassword/>,
+    },
+    {
+        path: "/set-new-password/:token",
+        element: <NewPassword/>,
+    },
 ])

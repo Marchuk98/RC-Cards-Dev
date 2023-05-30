@@ -1,13 +1,16 @@
-import {AxiosResponse} from "axios";
+import axios, {AxiosResponse} from "axios";
 import {instance} from "../../common/api/api.ts";
 
 export const authApi = {
     register: (data: RegisterAuthType) => {
-        return instance.post('auth/register', data)
+        return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
     },
     login: (data: LoginAuthType) => {
         return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("auth/login", data)
-    }
+    },
+    forgot(data: ForgotEmailDataType) {
+        return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data, {withCredentials:true})
+    },
 }
 
 type RegisterAuthType = Omit<LoginAuthType, 'rememberMe'>
@@ -32,4 +35,13 @@ export type ProfileType = {
     rememberMe: boolean;
 
     error?: string;
+}
+export type ResponseInfoType = {
+    info: string
+    error: string
+}
+export type ForgotEmailDataType ={
+    email: string, // кому восстанавливать пароль
+    from: string,
+    message: string
 }
