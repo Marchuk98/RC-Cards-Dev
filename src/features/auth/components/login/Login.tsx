@@ -1,5 +1,5 @@
-import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
+import Box from '@mui/material/Box';
 import Checkbox from '@mui/material/Checkbox';
 import Container from '@mui/material/Container';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -103,7 +103,7 @@ export const Login = () => {
                                 autoComplete="current-password"
                                 {...register("password", {
                                     required: "Password is required",
-                                    minLength: { value: 8, message: "Password should be more then 8" }
+                                    minLength: { value: 7, message: "Password should be more then 7" }
                                 })}
                                 error={!!errors.password}
                                 helperText={errors.password?.message}

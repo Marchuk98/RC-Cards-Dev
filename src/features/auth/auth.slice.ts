@@ -1,5 +1,5 @@
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {authApi, LoginAuthType, ProfileType} from './auth.api.ts';
+import {authApi, LoginAuthType} from './auth.api.ts';
 
 
 const slice = createSlice({
@@ -20,15 +20,17 @@ const slice = createSlice({
 
 const registerUser = createAsyncThunk(
     'auth/register',
-    async (data: { email: string, password: string }, thunkAPI) => {
+    async (data: { email: string, password: string }, {rejectWithValue}) => {
         try {
             const response = await authApi.register(data);
-            console.log(response.data);
-        } catch (error) {
-            console.log(error);
+            return {...response.data, info:"You have successfully registered"}
+        } catch (e) {
+            const error = errorUtils(e)
+            return rejectWithValue(error)
         }
     }
 );
+
 const loginUser = createAsyncThunk(
     "auth/login",
     async (data: LoginAuthType, thunkAPI) => {

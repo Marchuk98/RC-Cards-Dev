@@ -1,14 +1,26 @@
-import { createSlice} from "@reduxjs/toolkit";
+import {StatusType} from "../common/type/types.ts";
+import {createSlice} from "@reduxjs/toolkit";
 
 
+type AppInitialStateType = {
+    error:string | null
+    status:StatusType
+}
 
-const slice = createSlice({
-    name: "app",
-    initialState: {},
-    reducers: {},
+const initialState:AppInitialStateType = {
+    error:null,
+    status:"idle",
+}
+
+const appSlice = createSlice({
+    name:"app",
+    initialState,
+    reducers:{},
+    extraReducers:builder => {
+     builder
+
+    }
 })
 
-// eslint-disable-next-line no-empty-pattern
-const {} = slice.actions
 
-
+export const {reducer:appReducer,actions:appActions} = appSlice
