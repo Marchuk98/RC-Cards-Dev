@@ -7,6 +7,7 @@ import {appActions} from "../../app/app.slice.ts";
 const slice = createSlice({
     name: 'auth',
     initialState: {
+        isLoggedIn: null as boolean | null,
         profile: null as ProfileType | null,
         isMailSent: false
     },
@@ -15,27 +16,46 @@ const slice = createSlice({
         builder.addCase(loginUser.fulfilled, (state, action) => {
             if (action.payload?.profile) {
                 state.profile = action.payload.profile;
+                state.isLoggedIn = true
             }
         })
-            .addCase(forgot.fulfilled, (state, action)=>{
+            .addCase(forgot.fulfilled, (state, action) => {
                 state.isMailSent = action.payload.isMailSent
+            })
+            .addCase(logout.fulfilled, state => {
+                state.isLoggedIn = false
             })
         ;
     },
 });
 
 
+const logout = createAsyncThunk('auth/logout',
+    async (_, {dispatch, rejectWithValue}) => {
+        dispatch(appActions.setStatus("loading"))
+        try {
+            const response = await authApi.logout();
+            dispatch(appActions.setStatus("succeeded"))
+            return {info: response.data.info}
+        } catch (e) {
+            const error = errorUtils(e)
+            dispatch(appActions.setError({error}))
+            dispatch(appActions.setStatus('failed'))
+            return rejectWithValue(error)
+        }
+    })
+
 const registerUser = createAsyncThunk(
     'auth/register',
-    async (data: RegisterAuthType, {dispatch,rejectWithValue}) => {
+    async (data: RegisterAuthType, {dispatch, rejectWithValue}) => {
         dispatch(appActions.setStatus("loading"));
         try {
             const response = await authApi.register(data);
             dispatch(appActions.setStatus("succeeded"))
-            return {...response.data, info:"You have successfully registered"}
+            return {...response.data, info: "You have successfully registered"}
         } catch (e) {
             const error = errorUtils(e)
-            dispatch(appActions.setError(error))
+            dispatch(appActions.setError({error}))
             dispatch(appActions.setStatus('failed'))
             return rejectWithValue(error)
         }
@@ -52,7 +72,7 @@ const loginUser = createAsyncThunk(
             return {profile: response.data};
         } catch (e) {
             const error = errorUtils(e)
-            dispatch(appActions.setError(error))
+            dispatch(appActions.setError({error}))
             dispatch(appActions.setStatus("failed"))
             return rejectWithValue(error)
         }
@@ -60,15 +80,15 @@ const loginUser = createAsyncThunk(
 )
 const forgot = createAsyncThunk(
     "auth/forgot",
-    async(data:ForgotEmailDataType, {dispatch,rejectWithValue})=>{
+    async (data: ForgotEmailDataType, {dispatch, rejectWithValue}) => {
         dispatch(appActions.setStatus("loading"))
         try {
             const response = await authApi.forgot(data)
             dispatch(appActions.setStatus("succeeded"))
             return {...response.data, isMailSent: true}
-        } catch (e){
+        } catch (e) {
             const error = errorUtils(e)
-            dispatch(appActions.setError(error))
+            dispatch(appActions.setError({error}))
             dispatch(appActions.setStatus("failed"))
             return rejectWithValue(error)
         }
@@ -76,4 +96,4 @@ const forgot = createAsyncThunk(
 )
 
 export const authReducer = slice.reducer;
-export const authThunks = {registerUser, loginUser, forgot};
+export const authThunks = {registerUser, loginUser, forgot, logout};

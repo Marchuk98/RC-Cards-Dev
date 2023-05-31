@@ -11,8 +11,8 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {useForm} from "react-hook-form";
-import {useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../../../app/hooks.ts";
+import {Navigate, useNavigate} from "react-router-dom";
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {authThunks} from "../../auth.slice.ts";
 
 
@@ -36,7 +36,9 @@ export const Copyright = (props: any) => (
 const defaultTheme = createTheme();
 
 export const Login = () => {
+
     const navigate = useNavigate();
+    const isLoggedIn = useAppSelector(state => state.authReducer.isLoggedIn)
     const dispatch = useAppDispatch()
     const form = useForm<FormValues>({
         defaultValues: {
@@ -60,6 +62,11 @@ export const Login = () => {
         };
         dispatch(authThunks.loginUser(requestData));
     }
+
+    if(isLoggedIn){
+       return <Navigate to={"/"}/>
+    }
+
     return (
         <ThemeProvider theme={defaultTheme}>
             <Paper elevation={3} sx={{

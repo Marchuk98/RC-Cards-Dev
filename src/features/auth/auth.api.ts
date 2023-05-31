@@ -5,6 +5,9 @@ export const authApi = {
     register: (data: RegisterAuthType) => {
         return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
     },
+    logout:() => {
+      return instance.delete<ResponseInfoType>("/auth/me")
+    },
     login: (data: LoginAuthType) => {
         return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("auth/login", data)
     },
