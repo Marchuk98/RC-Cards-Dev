@@ -17,11 +17,11 @@ export const DescriptionSnackbar = () => {
             return
         }
 
-        dispatch(appActions.resetError());
+        dispatch(appActions.setError({error:null}));
     }
 
     return (
-        <Snackbar open={!!error} autoHideDuration={5000} onClose={handleClose}>
+        <Snackbar open={!!error} autoHideDuration={2000} onClose={handleClose}>
             <Alert
                 onClose={handleClose}
                 severity="error"
