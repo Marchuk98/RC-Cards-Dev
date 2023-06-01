@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {errorUtils} from "../../common/utils/error-utils.ts";
 import {authApi, ForgotEmailDataType, LoginAuthType, ProfileType, RegisterAuthType} from './auth.api.ts';
 import {appActions} from "../../app/app.slice.ts";
@@ -8,10 +8,15 @@ const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: null as boolean | null,
+        email: null as string | null,
         profile: null as ProfileType | null,
         isMailSent: false
     },
-    reducers: {},
+    reducers: {
+        setEmail: (state, action:PayloadAction<{email: string}>)=>{
+            state.email = action.payload.email
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(loginUser.fulfilled, (state, action) => {
             if (action.payload?.profile) {
@@ -115,5 +120,6 @@ const forgot = createAsyncThunk(
     }
 )
 
+export const authActions = slice.actions
 export const authReducer = slice.reducer;
 export const authThunks = {registerUser, loginUser, forgot, logout, authMe};
