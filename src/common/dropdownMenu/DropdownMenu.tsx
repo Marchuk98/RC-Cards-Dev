@@ -5,10 +5,11 @@ import Tooltip from '@mui/material/Tooltip';
 import Box from '@mui/material/Box';
 import IconButton from "@mui/material/IconButton";
 import {useNavigate} from "react-router-dom";
-import {useAppDispatch} from "../../app/hooks.ts";
+import {useAppDispatch, useAppSelector} from "../../app/hooks.ts";
 import {authThunks} from "../../features/auth/auth.slice.ts";
-import avatar from "../../assets/img/ava.png"
+// import avatar from "../../assets/img/ava.png"
 import Divider from '@mui/material/Divider'
+import Typography from "@mui/material/Typography";
 
 export const SimpleMenu = () => {
 
@@ -16,6 +17,9 @@ export const SimpleMenu = () => {
 
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
+    const getProfile = useAppSelector(state => state.profileReducer.profile)
+
+    const {name,avatar} = getProfile
 
     const handleCloseUserMenu = () => {
         setAnchorElUser(null);
@@ -29,14 +33,17 @@ export const SimpleMenu = () => {
         })
     },[])
 
-
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
 
     return (
         <div>
+
             <Box sx={{ flexGrow: 0 }}>
+                <Typography component={'span'} sx={{ fontWeight: '500', fontSize: '16px',marginRight:"30px" }}>
+                    {name}
+                </Typography>
                 <Tooltip title="Open settings">
                     <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
                         <Avatar alt="Remy Sharp" src={avatar} />
@@ -62,11 +69,6 @@ export const SimpleMenu = () => {
                         onClick={redirectToProfileHandler}
                         sx={{ display: 'flex', alignItems: 'center', justifyContent: 'space-evenly',padding:"7px" }}
                     >
-                        {/*<ProfileAvatar*/}
-                        {/*    name={name}*/}
-                        {/*    avatar={avatar}*/}
-                        {/*    imageSize={{ width: '25px', height: '25px', fontSize: '13px' }}*/}
-                        {/*/>{' '}*/}
                         Profile
                     </MenuItem>
                     <Divider />
