@@ -135,12 +135,12 @@ export const Login = () => {
                             </Button>
                             <Grid container>
                                 <Grid item xs>
-                                    <Link onClick={()=>navigate("/forgotPassword")} href="#" variant="body2">
+                                    <Link style={{cursor:"pointer"}} onClick={()=>navigate("/forgotPassword")} variant="body2">
                                         Forgot password?
                                     </Link>
                                 </Grid>
                                 <Grid item>
-                                    <Link href={"#"} onClick={()=>navigate("/register")} variant="body2">
+                                    <Link style={{cursor:"pointer"}} onClick={()=>navigate("/register")} variant="body2">
                                         {"Don't have an account? Sign Up"}
                                     </Link>
                                 </Grid>
