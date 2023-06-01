@@ -8,6 +8,7 @@ import {SimpleMenu} from "../../dropdownMenu/DropdownMenu.tsx";
 import Link from "@mui/material/Link";
 import logo from "../../../assets/img/logo-header.svg"
 import {LinearProgress} from "@mui/material";
+import {DescriptionSnackbar} from "../../snackbar/Snackbar.tsx";
 
 
 export const Header = () => {
@@ -43,6 +44,7 @@ export const Header = () => {
                         <SimpleMenu/>
                     )}
                 </Toolbar>
+                <DescriptionSnackbar/>
             </Container>
             {status === "loading" && <LinearProgress/>}
         </AppBar>

@@ -5,11 +5,14 @@ export const authApi = {
     register: (data: RegisterAuthType) => {
         return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
     },
+    me:() => {
+      return instance.post<ProfileType>('auth/me')
+    },
     logout:() => {
       return instance.delete<ResponseInfoType>("/auth/me")
     },
     login: (data: LoginAuthType) => {
-        return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("auth/login", data)
+        return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
     },
     forgot(data: ForgotEmailDataType) {
         return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data, {withCredentials:true})
@@ -43,6 +46,7 @@ export type ResponseInfoType = {
     info: string
     error: string
 }
+
 export type ForgotEmailDataType ={
     email: string, // кому восстанавливать пароль
     from: string,

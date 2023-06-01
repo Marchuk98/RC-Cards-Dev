@@ -25,12 +25,32 @@ const slice = createSlice({
             .addCase(logout.fulfilled, state => {
                 state.isLoggedIn = false
             })
+            .addCase(authMe.fulfilled,state => {
+                state.isLoggedIn = true
+            })
+            .addCase(authMe.rejected,state => {
+                state.isLoggedIn = false
+            })
         ;
     },
 });
 
 
-const logout = createAsyncThunk('auth/logout',
+// саночку для тебя написал Алексий
+export const authMe = createAsyncThunk(
+    "auth/me",
+    async (_, {rejectWithValue}) => {
+        try {
+            const response = await authApi.me()
+            return response.data
+        } catch (e) {
+            const error = errorUtils(e)
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const logout = createAsyncThunk('auth/logout',
     async (_, {dispatch, rejectWithValue}) => {
         dispatch(appActions.setStatus("loading"))
         try {
@@ -62,7 +82,7 @@ const registerUser = createAsyncThunk(
     }
 );
 
-const loginUser = createAsyncThunk(
+export const loginUser = createAsyncThunk(
     "auth/login",
     async (data: LoginAuthType, {dispatch, rejectWithValue}) => {
         dispatch(appActions.setStatus("loading"));
@@ -96,4 +116,4 @@ const forgot = createAsyncThunk(
 )
 
 export const authReducer = slice.reducer;
-export const authThunks = {registerUser, loginUser, forgot, logout};
+export const authThunks = {registerUser, loginUser, forgot, logout, authMe};

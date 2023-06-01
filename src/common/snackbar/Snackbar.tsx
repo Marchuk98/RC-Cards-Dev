@@ -12,7 +12,7 @@ export const DescriptionSnackbar = () => {
     const error = useAppSelector(state => state.appReducer.error);
     const dispatch = useAppDispatch();
 
-    const handleClose = (event: SyntheticEvent | Event, reason?: string) => {
+    const handleClose = (_event: SyntheticEvent | Event, reason?: string) => {
         if (reason === 'clickaway') {
             return
         }
@@ -21,7 +21,7 @@ export const DescriptionSnackbar = () => {
     }
 
     return (
-        <Snackbar open={!!error} autoHideDuration={2000} onClose={handleClose}>
+        <Snackbar open={!!error} autoHideDuration={4000} onClose={handleClose}>
             <Alert
                 onClose={handleClose}
                 severity="error"
