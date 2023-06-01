@@ -37,7 +37,7 @@ export const router = createHashRouter([
                 element: <CheckEmail/>,
             },
             {
-                path: "/set-new-password/:token",
+                path: "/set-new-password/:resetPasswordToken",
                 element: <NewPassword/>,
             },
         ],

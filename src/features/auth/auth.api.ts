@@ -17,6 +17,9 @@ export const authApi = {
     forgot(data: ForgotEmailDataType) {
         return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data, {withCredentials:true})
     },
+    setNewPassword(data: NewPasswordDataType) {
+        return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data, {withCredentials:true})
+    },
 }
 
 export type RegisterAuthType = Omit<LoginAuthType, 'rememberMe'>
@@ -51,4 +54,8 @@ export type ForgotEmailDataType ={
     email: string, // кому восстанавливать пароль
     from: string,
     message: string
+}
+export type NewPasswordDataType={
+    password:string
+    resetPasswordToken: string | undefined
 }

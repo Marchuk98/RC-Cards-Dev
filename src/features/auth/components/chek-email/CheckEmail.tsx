@@ -49,7 +49,7 @@ export const CheckEmail = () => {
                         <Button
                             fullWidth
                             variant="contained"
-                            sx={{mt: 3, mb: 2, borderRadius: "25px", width:"347px"}}
+                            sx={{ml:1,mt: 3, mb: 2, borderRadius: "25px", width:"347px"}}
                             onClick={()=>navigate("/login")}
                         >
                             Back to login
