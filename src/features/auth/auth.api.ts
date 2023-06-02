@@ -1,9 +1,9 @@
-import axios, {AxiosResponse} from "axios";
-import {instance} from "../../common/api/api.ts";
+import {AxiosResponse} from "axios";
+import {instance, instanceHeroku} from "../../common/api/api.ts";
 
 export const authApi = {
     register: (data: RegisterAuthType) => {
-        return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
+        return instanceHeroku.post('auth/register', data)
     },
     me:() => {
       return instance.post<ProfileType>('auth/me')
@@ -15,10 +15,10 @@ export const authApi = {
         return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
     },
     forgot(data: ForgotEmailDataType) {
-        return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data, {withCredentials:true})
+        return instanceHeroku.post<ResponseInfoType>('auth/forgot', data)
     },
     setNewPassword(data: NewPasswordDataType) {
-        return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/set-new-password', data, {withCredentials:true})
+        return instanceHeroku.post<ResponseInfoType>('auth/set-new-password', data)
     },
 }
 
