@@ -1,5 +1,5 @@
 import {AxiosResponse} from "axios";
-import {instance, instanceHeroku} from "../../common/api/api.ts";
+import {instanceHeroku} from "../../common/api/api.ts";
 
 export const authApi = {
     register: (data: RegisterAuthType) => {
@@ -9,7 +9,7 @@ export const authApi = {
       return instanceHeroku.post<ProfileType>('auth/me')
     },
     logout:() => {
-      return instance.delete<ResponseInfoType>("/auth/me")
+      return instanceHeroku.delete<ResponseInfoType>("/auth/me")
     },
     login: (data: LoginAuthType) => {
         return instanceHeroku.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
