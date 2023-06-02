@@ -6,13 +6,13 @@ export const authApi = {
         return instanceHeroku.post('auth/register', data)
     },
     me:() => {
-      return instance.post<ProfileType>('auth/me')
+      return instanceHeroku.post<ProfileType>('auth/me')
     },
     logout:() => {
       return instance.delete<ResponseInfoType>("/auth/me")
     },
     login: (data: LoginAuthType) => {
-        return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
+        return instanceHeroku.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
     },
     forgot(data: ForgotEmailDataType) {
         return instanceHeroku.post<ResponseInfoType>('auth/forgot', data)

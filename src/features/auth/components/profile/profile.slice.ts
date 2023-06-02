@@ -1,6 +1,6 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {ProfileStateType} from "./profile.api.ts";
-import {loginUser} from "../../auth.slice.ts";
+import {authMe, loginUser} from "../../auth.slice.ts";
 
 
 const initialState = {
@@ -15,6 +15,9 @@ const profileSlice = createSlice({
     extraReducers:builder => {
         builder
             .addCase(loginUser.fulfilled,(state,action)=> {
+                state.profile = action.payload.profile
+            })
+            .addCase(authMe.fulfilled,(state,action)=> {
                 state.profile = action.payload.profile
             })
     }

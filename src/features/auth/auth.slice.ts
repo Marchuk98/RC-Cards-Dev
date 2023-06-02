@@ -51,15 +51,15 @@ const slice = createSlice({
     },
 });
 
-
-// саночку для тебя написал Алексий
 export const authMe = createAsyncThunk(
     "auth/me",
-    async (_, {rejectWithValue}) => {
+    async (_, {dispatch, rejectWithValue}) => {
         try {
             const response = await authApi.me()
-            return response.data
+            dispatch(appActions.setIsInitialized({isInitialized: true}))
+            return {profile: response.data, isInitialized: true}
         } catch (e) {
+            dispatch(appActions.setIsInitialized({isInitialized: true}))
             const error = errorUtils(e)
             return rejectWithValue(error)
         }
