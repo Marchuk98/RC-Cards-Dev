@@ -86,10 +86,10 @@ export const ForgotPassword = () => {
                           </Typography>
                           <Grid container justifyContent="center">
                               <Grid item>
-                                  <Link onClick={()=>navigate("/login")} sx={{fontWeight: "600",
+                                  <Link style={{cursor:"pointer"}} onClick={()=>navigate("/login")} sx={{fontWeight: "600",
                                       fontSize: "16px",
                                       lineHeight: "24px",
-                                  }} href="#" variant="body2">
+                                  }} variant="body2">
                                       Try logging in
                                   </Link>
                               </Grid>
