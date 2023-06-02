@@ -1,10 +1,10 @@
-import {instance} from "../../../../common/api/api.ts";
+import { instanceHeroku} from "../../../../common/api/api.ts";
 import {ProfileType} from "../../auth.api.ts";
 
 
 export const profileApi = {
     changeUserData(payload:UserData){
-        return instance.put<UpdateProfileType>('auth/me',payload)
+        return instanceHeroku.put<UpdateProfileType>('auth/me',payload)
     }
 }
 

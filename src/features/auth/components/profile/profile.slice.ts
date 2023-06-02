@@ -1,8 +1,8 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {ProfileStateType} from "./profile.api.ts";
-import {authMe, loginUser} from "../../auth.slice.ts";
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
-import {profileApi, ProfileStateType, UserData} from "./profile.api.ts";
+import {authMe} from "../../auth.slice.ts";
+import {createAsyncThunk} from "@reduxjs/toolkit";
+import {profileApi, UserData} from "./profile.api.ts";
 import {loginUser} from "../../auth.slice.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
 
