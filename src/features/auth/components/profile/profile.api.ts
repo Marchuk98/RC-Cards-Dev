@@ -4,7 +4,7 @@ import {ProfileType} from "../../auth.api.ts";
 
 export const profileApi = {
     changeUserData(payload:UserData){
-        return instance.put('/auth/me',payload)
+        return instance.put<UpdateProfileType>('auth/me',payload)
     }
 }
 
@@ -14,7 +14,7 @@ export type UserData = {
 }
 
 export type UpdateProfileType = {
-    updateUser: ProfileType
+    updatedUser: ProfileType
     error?:string
 }
 
