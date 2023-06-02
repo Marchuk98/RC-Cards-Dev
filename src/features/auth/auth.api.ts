@@ -1,21 +1,24 @@
-import axios, {AxiosResponse} from "axios";
-import {instance} from "../../common/api/api.ts";
+import {AxiosResponse} from "axios";
+import {instanceHeroku} from "../../common/api/api.ts";
 
 export const authApi = {
     register: (data: RegisterAuthType) => {
-        return axios.post('https://neko-back.herokuapp.com/2.0/auth/register', data, {withCredentials: true})
+        return instanceHeroku.post('auth/register', data)
     },
     me:() => {
-      return instance.post<ProfileType>('auth/me')
+      return instanceHeroku.post<ProfileType>('auth/me')
     },
     logout:() => {
-      return instance.delete<ResponseInfoType>("/auth/me")
+      return instanceHeroku.delete<ResponseInfoType>("/auth/me")
     },
     login: (data: LoginAuthType) => {
-        return instance.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
+        return instanceHeroku.post<ProfileType, AxiosResponse<ProfileType>, LoginAuthType>("/auth/login", data)
     },
     forgot(data: ForgotEmailDataType) {
-        return axios.post<ResponseInfoType>('https://neko-back.herokuapp.com/2.0/auth/forgot', data, {withCredentials:true})
+        return instanceHeroku.post<ResponseInfoType>('auth/forgot', data)
+    },
+    setNewPassword(data: NewPasswordDataType) {
+        return instanceHeroku.post<ResponseInfoType>('auth/set-new-password', data)
     },
 }
 
@@ -51,4 +54,8 @@ export type ForgotEmailDataType ={
     email: string, // кому восстанавливать пароль
     from: string,
     message: string
+}
+export type NewPasswordDataType={
+    password:string
+    resetPasswordToken: string | undefined
 }

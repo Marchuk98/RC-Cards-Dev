@@ -1,3 +1,6 @@
+import {createSlice} from "@reduxjs/toolkit";
+import {ProfileStateType} from "./profile.api.ts";
+import {authMe, loginUser} from "../../auth.slice.ts";
 import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
 import {profileApi, ProfileStateType, UserData} from "./profile.api.ts";
 import {loginUser} from "../../auth.slice.ts";
@@ -16,6 +19,9 @@ const profileSlice = createSlice({
     extraReducers:builder => {
         builder
             .addCase(loginUser.fulfilled,(state,action)=> {
+                state.profile = action.payload.profile
+            })
+            .addCase(authMe.fulfilled,(state,action)=> {
                 state.profile = action.payload.profile
             })
             .addCase(changeUserData.fulfilled, (state, action) => {

@@ -34,7 +34,7 @@ export const Header = () => {
                             backgroundColor: "#366EFF",
                             border: 'none !important',
                             boxShadow: "0px 4px 18px rgba(54, 110, 255, 0.35), inset 0px 1px 0px rgba(255, 255, 255, 0.3)",
-                            padding: "5px 20px",
+                            padding: "5px 28px",
                             fontSize: "18px",
                             textTransform: 'none'
                         }} variant="contained">

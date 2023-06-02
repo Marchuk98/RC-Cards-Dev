@@ -1,4 +1,5 @@
 import {createHashRouter} from "react-router-dom";
+import {CheckEmail} from "../../features/auth/components/chek-email/CheckEmail.tsx";
 import {NewPassword} from "../../features/auth/components/new-password/NewPassword.tsx";
 import {ForgotPassword} from "../../features/auth/components/forgot-password/ForgotPassword.tsx";
 import {Profile} from "../../features/auth/components/profile/Profile.tsx";
@@ -32,7 +33,11 @@ export const router = createHashRouter([
                 element: <ForgotPassword/>,
             },
             {
-                path: "/set-new-password/:token",
+                path: "/checkEmail",
+                element: <CheckEmail/>,
+            },
+            {
+                path: "/set-new-password/:resetPasswordToken",
                 element: <NewPassword/>,
             },
         ],

@@ -10,8 +10,8 @@ import Typography from "@mui/material/Typography";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {developers} from "../../../../app/common/constants/email-message.ts";
-import {useAppDispatch} from "../../../../app/hooks.ts";
-import {authThunks} from "../../../../features/auth/auth.slice.ts";
+import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {authActions, authThunks} from "../../auth.slice.ts";
 
 type ForgotPasswordType = {
     email: string;
@@ -20,6 +20,10 @@ type ForgotPasswordType = {
 export const ForgotPassword = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
+    const isMailSent = useAppSelector((state)=>state.authReducer.isMailSent)
+    if(isMailSent){
+        navigate("/checkEmail")
+    }
     const {
         register,
         handleSubmit,
@@ -28,6 +32,7 @@ export const ForgotPassword = () => {
 
     const onSubmit = (data: ForgotPasswordType) => {
         dispatch(authThunks.forgot({...data, ...developers}));
+        dispatch(authActions.setEmail({...data}))
     };
   return (
           <Paper elevation={3} sx={{padding: "25px",margin:'50px auto',maxWidth: "413px"}}>
@@ -81,10 +86,10 @@ export const ForgotPassword = () => {
                           </Typography>
                           <Grid container justifyContent="center">
                               <Grid item>
-                                  <Link onClick={()=>navigate("/login")} sx={{fontWeight: "600",
+                                  <Link style={{cursor:"pointer"}} onClick={()=>navigate("/login")} sx={{fontWeight: "600",
                                       fontSize: "16px",
                                       lineHeight: "24px",
-                                  }} href="#" variant="body2">
+                                  }} variant="body2">
                                       Try logging in
                                   </Link>
                               </Grid>

@@ -1,17 +1,30 @@
-import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {errorUtils} from "../../common/utils/error-utils.ts";
-import {authApi, ForgotEmailDataType, LoginAuthType, ProfileType, RegisterAuthType} from './auth.api.ts';
+import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {appActions} from "../../app/app.slice.ts";
+import {errorUtils} from "../../common/utils/error-utils.ts";
+import {
+    authApi,
+    ForgotEmailDataType,
+    LoginAuthType,
+    NewPasswordDataType,
+    ProfileType,
+    RegisterAuthType
+} from './auth.api.ts';
 
 
 const slice = createSlice({
     name: 'auth',
     initialState: {
         isLoggedIn: null as boolean | null,
+        email: null as string | null,
         profile: null as ProfileType | null,
-        isMailSent: false
+        isMailSent: false,
+        isNewPasswordSet: false
     },
-    reducers: {},
+    reducers: {
+        setEmail: (state, action:PayloadAction<{email: string}>)=>{
+            state.email = action.payload.email
+        }
+    },
     extraReducers: (builder) => {
         builder.addCase(loginUser.fulfilled, (state, action) => {
             if (action.payload?.profile) {
@@ -31,19 +44,22 @@ const slice = createSlice({
             .addCase(authMe.rejected,state => {
                 state.isLoggedIn = false
             })
+            .addCase(newPassword.fulfilled,(state, action) => {
+                state.isNewPasswordSet = action.payload.isNewPasswordSet
+            })
         ;
     },
 });
 
-
-// саночку для тебя написал Алексий
 export const authMe = createAsyncThunk(
     "auth/me",
-    async (_, {rejectWithValue}) => {
+    async (_, {dispatch, rejectWithValue}) => {
         try {
             const response = await authApi.me()
-            return response.data
+            dispatch(appActions.setIsInitialized({isInitialized: true}))
+            return {profile: response.data, isInitialized: true}
         } catch (e) {
+            dispatch(appActions.setIsInitialized({isInitialized: true}))
             const error = errorUtils(e)
             return rejectWithValue(error)
         }
@@ -114,6 +130,23 @@ const forgot = createAsyncThunk(
         }
     }
 )
+const newPassword = createAsyncThunk(
+    "auth/newPassword",
+    async (data: NewPasswordDataType, {dispatch, rejectWithValue}) => {
+        dispatch(appActions.setStatus("loading"))
+        try {
+            const response = await authApi.setNewPassword(data)
+            dispatch(appActions.setStatus("succeeded"))
+            return {...response.data, isNewPasswordSet: true}
+        } catch (e) {
+            const error = errorUtils(e)
+            dispatch(appActions.setError({error}))
+            dispatch(appActions.setStatus("failed"))
+            return rejectWithValue(error)
+        }
+    }
+)
 
+export const authActions = slice.actions
 export const authReducer = slice.reducer;
-export const authThunks = {registerUser, loginUser, forgot, logout, authMe};
+export const authThunks = {registerUser, loginUser, forgot, logout, authMe, newPassword};
