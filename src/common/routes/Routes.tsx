@@ -40,6 +40,10 @@ export const router = createHashRouter([
                 path: "/set-new-password/:resetPasswordToken",
                 element: <NewPassword/>,
             },
+            {
+                path: "/packs-item",
+                element: <Packs/>,
+            },
         ],
     },
 ])
