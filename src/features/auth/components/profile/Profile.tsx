@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
 import Avatar from "@mui/material/Avatar";
-import edit_photo from '../../../../assets/img/edit_photo.svg';
+import edit_photo from '../../../../assets/img/forgotPasswordFlow/CheckEmailIcon.svg';
 import {UserNameProfile} from "../../../../common/components/UserNameProfile/UserNameProfile.tsx";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {changeUserData} from "./profile.slice.ts";
