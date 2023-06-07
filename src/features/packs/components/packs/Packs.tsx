@@ -1,5 +1,7 @@
-import React from "react";
+import {PackTable} from "../packTable/PackTable.tsx";
 
 export const Packs = () => {
-  return <div>Packs</div>;
+  return <div>
+    <PackTable/>
+  </div>;
 };
