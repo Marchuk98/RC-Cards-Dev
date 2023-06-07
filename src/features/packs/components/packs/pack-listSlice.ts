@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {PacksResponseType, QueryParams} from "./types.ts";
 import {packAPI} from "./pack.api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
@@ -53,7 +53,11 @@ export const getPacks = createAsyncThunk<PacksResponseType, void,ThunkAPIType>(
 export const packListSlice = createSlice({
     name:"pack-list",
     initialState,
-    reducers:{},
+    reducers: {
+        setQueryParams: (state, action: PayloadAction<Partial<QueryParams>>) => {
+            state.queryParams = { ...state.queryParams, ...action.payload }
+        },
+    },
     extraReducers:builder => {
         builder
             .addCase(getPacks.fulfilled, (state, action) => {
@@ -63,6 +67,6 @@ export const packListSlice = createSlice({
     }
 })
 
-export const {reducer: packListReducer} = packListSlice
+export const {reducer: packListReducer, actions: packListActions} = packListSlice
 
 export const packsThunks = {getPacks}
