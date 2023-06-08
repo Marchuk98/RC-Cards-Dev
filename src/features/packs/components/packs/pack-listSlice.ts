@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../../../../common/type/types.ts";
 import {PacksResponseType, QueryParams} from "./types.ts";
-import {packAPI} from "./pack.api.ts";
+import {AddPackRequestType, packAPI} from "./pack.api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
 import {RootState} from "../../../../app/store.ts";
 
@@ -40,12 +40,12 @@ const initialState:InitialStateType = {
 }
 
 
-export const getPacks = createAsyncThunk<PacksResponseType, { cardsPack_id: string },ThunkAPIType>(
-    "/cards/pack",
-    async (id, { rejectWithValue,getState }) => {
+export const getPacks = createAsyncThunk<PacksResponseType, void,ThunkAPIType>(
+    "pack-list/getPacks",
+    async (_, { rejectWithValue,getState }) => {
         try {
             const params = getState().packListReducer.queryParams
-            const response = await packAPI.getPacks({...params,...id});
+            const response = await packAPI.getPacks({...params});
             return  response.data
         } catch (e) {
             const error = errorUtils(e);
@@ -53,9 +53,25 @@ export const getPacks = createAsyncThunk<PacksResponseType, { cardsPack_id: stri
         }
     }
 );
-const pending = isPending(getPacks)
+export const addPack = createAsyncThunk<void, AddPackRequestType, ThunkAPIType>(
+    'pack-list/addPack',
+    async (data, { dispatch, rejectWithValue }) => {
+        try {
+            await packAPI.addPack(data)
+
+            dispatch(getPacks())
+        } catch (e) {
+            const error = errorUtils(e)
+
+            console.log(error)
+
+            return rejectWithValue(error ? error : `File larger than 100 kB`)
+        }
+    }
+)
+const pending = isPending(getPacks, addPack)
 const fulfilled = isFulfilled(getPacks)
-const rejected = isRejected(getPacks)
+const rejected = isRejected(getPacks, addPack)
 
 
 export const packListSlice = createSlice({

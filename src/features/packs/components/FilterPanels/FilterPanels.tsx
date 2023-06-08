@@ -6,6 +6,7 @@ import {CustomSlider} from "../../../../common/components/CustomSlider/CustomSli
 import {Filters} from "../../../../common/components/Filters/Filters.tsx";
 import {InputSearch} from "../../../../common/components/InputSearch/InputSearch.tsx";
 import {Reset} from "../../../../common/components/ResetButton/Reset.tsx";
+import {SubHeader} from "../../../../common/components/SubHeader/SubHeader.tsx";
 import {
     maxParams,
     minParams,
@@ -14,7 +15,7 @@ import {
     packListStatus,
     packNameParams, userIdParams
 } from "../../selectors.ts";
-import {getPacks, packActions} from "../packs/pack-listSlice.ts";
+import {addPack, getPacks, packActions} from "../packs/pack-listSlice.ts";
 
 export const FilterPanels = () => {
     const dispatch = useAppDispatch()
@@ -30,7 +31,7 @@ export const FilterPanels = () => {
     const page = useAppSelector(packListPage)
     const user_id = useAppSelector(userIdParams)
     useEffect(() => {
-        dispatch(getPacks({cardsPack_id: packId as string}))
+        dispatch(getPacks())
     }, [packName, max, min, user_id])
     const onSearchChange = (search: string) => {
         dispatch(packActions.setQueryParams({packName: search}))
@@ -51,8 +52,17 @@ export const FilterPanels = () => {
     const onReset = () => {
         dispatch(packActions.resetQueryParams())
     }
+    const onAddPack = () =>{
+        dispatch(addPack({cardsPack: {name:"sdhglajdsf;"}}))
+    }
     return (
         <Filters>
+            <SubHeader
+                title={'Pack list'}
+                titleButton={'Add new pack'}
+                disabled={status === 'loading'}
+                onClick={onAddPack}
+            />
             <InputSearch onChangeValue={onSearchChange} searchValue={packName}/>
             <ButtonsGroup
                 disabled={status === 'loading'}
