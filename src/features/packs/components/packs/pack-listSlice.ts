@@ -1,4 +1,5 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
+import {StatusType} from "../../../../common/type/types.ts";
 import {PacksResponseType, QueryParams} from "./types.ts";
 import {packAPI} from "./pack.api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
@@ -12,6 +13,7 @@ type ThunkAPIType = {
 type InitialStateType = {
     packList: PacksResponseType
     queryParams: QueryParams
+    status: StatusType
 }
 
 const initialState:InitialStateType = {
@@ -34,6 +36,7 @@ const initialState:InitialStateType = {
         pageCount: 7,
         sortPacks: '0updated',
     },
+    status: "idle"
 }
 
 
@@ -50,6 +53,10 @@ export const getPacks = createAsyncThunk<PacksResponseType, { cardsPack_id: stri
         }
     }
 );
+const pending = isPending(getPacks)
+const fulfilled = isFulfilled(getPacks)
+const rejected = isRejected(getPacks)
+
 
 export const packListSlice = createSlice({
     name:"pack-list",
@@ -57,13 +64,25 @@ export const packListSlice = createSlice({
     reducers:{
         setQueryParams(state,action:PayloadAction<Partial<QueryParams>>){
             state.queryParams = {...state.queryParams, ...action.payload}
-        }
+        },
+        resetQueryParams: state => {
+            state.queryParams = initialState.queryParams
+        },
     },
     extraReducers:builder => {
         builder
             .addCase(getPacks.fulfilled, (state, action) => {
-                console.log('appp', action.payload)
-               state.packList = action.payload
+                state.packList = action.payload
+                state.status = 'succeeded'
+            })
+            .addMatcher(pending, state => {
+                state.status = 'loading'
+            })
+            .addMatcher(fulfilled, state => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(rejected, state => {
+                state.status = 'failed'
             })
     }
 })
