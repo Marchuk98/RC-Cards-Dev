@@ -16,7 +16,7 @@ export const Packs = () => {
 
     const {packId} = useParams<{ packId: string }>()
     useEffect(() => {
-        dispatch(getPacks({cardsPack_id: packId as string}))
+        dispatch(getPacks())
     }, [pageCountParam])
 
     useEffect(() => {
