@@ -18,7 +18,7 @@ export const Pagination = ({page,rows,count,disabled,onChange,onChangePageCount}
     const isDisabled = Math.ceil(count / rows) - 1 === page || page <= -1
 
     const handleChangePage = (_e:MouseEvent<HTMLButtonElement> | null, newPage: number,) => {
-        onChange(newPage+1);
+        onChange(newPage);
     };
 
     const handleChangeRowsPerPage = (e: ChangeEvent<HTMLInputElement>,) => {
