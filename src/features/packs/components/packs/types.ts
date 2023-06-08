@@ -32,6 +32,7 @@ export type QueryParams = {
     packName: string
     min: number
     max: number
+    cardsPack_id: string
     sortPacks: string
     page: number
     pageCount: number
