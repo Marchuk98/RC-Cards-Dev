@@ -39,3 +39,11 @@ export type QueryParams = {
     user_id: string
     block: boolean
 }
+export type AddPackRequestType = {
+    cardsPack: AddPackType
+}
+export type AddPackType = {
+    name?: string
+    deckCover?: string
+    private?: boolean
+}

@@ -22,7 +22,7 @@ export const PackTable = () => {
     const {packId} = useParams<{ packId: string }>()
 
     useEffect(() => {
-        dispatch(getPacks({cardsPack_id: packId as string}))
+        dispatch(getPacks())
     }, [dispatch, packId, pageParam, pageCountParam])
 
     console.log(cardPacks)
