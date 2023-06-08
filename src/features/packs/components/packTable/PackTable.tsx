@@ -11,16 +11,20 @@ import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import Box from "@mui/material/Box";
 import {useEffect} from "react";
 import {getPacks} from "../packs/pack-listSlice.ts";
+import {useParams} from "react-router-dom";
 
 export const PackTable = () => {
 
     const getProfileData = useAppSelector(state => state.profileReducer.profile)
     const cardPacks = useAppSelector(state => state.packListReducer.packList.cardPacks)
     const dispatch = useAppDispatch()
+    const pageParam = useAppSelector(state => state.packListReducer.queryParams.page)
+    const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
+    const { packId } = useParams<{ packId: string }>()
 
     useEffect(()=> {
-        dispatch(getPacks())
-    },[dispatch])
+        dispatch(getPacks({ cardsPack_id: packId as string }))
+    },[dispatch,packId,pageParam, pageCountParam])
 
     console.log(cardPacks)
 
