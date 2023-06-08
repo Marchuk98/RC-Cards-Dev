@@ -26,6 +26,7 @@ const initialState:InitialStateType = {
     queryParams: {
         min: 0,
         max: 0,
+        cardsPack_id: '',
         packName: '',
         user_id: '',
         block: false,
@@ -36,12 +37,12 @@ const initialState:InitialStateType = {
 }
 
 
-export const getPacks = createAsyncThunk<PacksResponseType, void,ThunkAPIType>(
+export const getPacks = createAsyncThunk<PacksResponseType, { cardsPack_id: string },ThunkAPIType>(
     "/cards/pack",
-    async (_, { rejectWithValue,getState }) => {
+    async (id, { rejectWithValue,getState }) => {
         try {
             const params = getState().packListReducer.queryParams
-            const response = await packAPI.getPacks({...params});
+            const response = await packAPI.getPacks({...params,...id});
             return  response.data
         } catch (e) {
             const error = errorUtils(e);
@@ -53,10 +54,10 @@ export const getPacks = createAsyncThunk<PacksResponseType, void,ThunkAPIType>(
 export const packListSlice = createSlice({
     name:"pack-list",
     initialState,
-    reducers: {
-        setQueryParams: (state, action: PayloadAction<Partial<QueryParams>>) => {
-            state.queryParams = { ...state.queryParams, ...action.payload }
-        },
+    reducers:{
+        setQueryParams(state,action:PayloadAction<Partial<QueryParams>>){
+            state.queryParams = {...state.queryParams, ...action.payload}
+        }
     },
     extraReducers:builder => {
         builder
@@ -67,6 +68,6 @@ export const packListSlice = createSlice({
     }
 })
 
-export const {reducer: packListReducer, actions: packListActions} = packListSlice
+export const {reducer: packListReducer, actions:packActions} = packListSlice
 
 export const packsThunks = {getPacks}
