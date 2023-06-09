@@ -1,8 +1,11 @@
 import Pagination from "@mui/material/Pagination";
 import Stack from "@mui/material/Stack";
 import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
 import FormControl from "@mui/material/FormControl";
 import MenuItem from "@mui/material/MenuItem";
+import { ChangeEvent } from 'react';
+import {SelectChangeEvent} from "@mui/material";
 
 
 type PaginationPropsType = {

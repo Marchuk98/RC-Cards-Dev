@@ -1,4 +1,3 @@
-import {InputSearch} from '../../../../common/components/InputSearch/InputSearch.tsx';
 import {packNameParams} from '../../selectors.ts';
 import {PackTable} from '../packTable/PackTable.tsx';
 import {useAppDispatch, useAppSelector} from '../../../../app/hooks.ts';
@@ -16,15 +15,11 @@ export const Packs = () => {
     const dispatch = useAppDispatch()
 
     const packName = useAppSelector(packNameParams);
-    const {packId} = useParams<{ packId: string }>()
+    // const {packId} = useParams<{ packId: string }>()
 
-    useEffect(() => {
-        dispatch(getPacks())
-    }, [pageCountParam])
-
-    useEffect(() => {
-        dispatch(packActions.setQueryParams({cardsPack_id: packId as string}))
-    }, [packId, dispatch])
+    // useEffect(() => {
+    //     dispatch(packActions.setQueryParams({cardsPack_id: packId as string}))
+    // }, [packId, dispatch])
 
     const onSearchChange = (search: string) => {
         dispatch(packActions.setQueryParams({packName: search}));
