@@ -20,7 +20,7 @@ const initialState:InitialStateType = {
     packList: {
         minCardsCount: 0,
         maxCardsCount: 0,
-        page: 0,
+        page: 1,
         pageCount: 7,
         cardPacks: [],
         cardPacksTotalCount: 100,
@@ -32,7 +32,7 @@ const initialState:InitialStateType = {
         packName: '',
         user_id: '',
         block: false,
-        page: 0,
+        page: 1,
         pageCount: 7,
         sortPacks: '0updated',
     },
@@ -88,7 +88,7 @@ export const packListSlice = createSlice({
     extraReducers:builder => {
         builder
             .addCase(getPacks.fulfilled, (state, action) => {
-                state.packList = action.payload
+               state.packList = action.payload
                 state.status = 'succeeded'
             })
             .addMatcher(pending, state => {

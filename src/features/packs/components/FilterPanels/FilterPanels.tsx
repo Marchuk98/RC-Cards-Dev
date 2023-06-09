@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
+// import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {ButtonsGroup} from "../../../../common/components/ButtonsGroup/ButtonsGroup.tsx";
 import {CustomSlider} from "../../../../common/components/CustomSlider/CustomSlider.tsx";
@@ -19,7 +19,7 @@ import {addPack, getPacks, packActions} from "../packs/pack-listSlice.ts";
 
 export const FilterPanels = () => {
     const dispatch = useAppDispatch()
-    const {packId} = useParams<{ packId: string }>()
+    // const {packId} = useParams<{ packId: string }>()
     const packName = useAppSelector(packNameParams)
     const minCardsCount = useAppSelector(packListMinCardsCount)
     const maxCardsCount = useAppSelector(packListMaxCardsCount)
@@ -36,7 +36,7 @@ export const FilterPanels = () => {
     const onSearchChange = (search: string) => {
         dispatch(packActions.setQueryParams({packName: search}))
     }
-    const onChangeSliderValue = (event: any, numbers: number[] | number) => {
+    const onChangeSliderValue = (_event: any, numbers: number[] | number) => {
         if (Array.isArray(numbers)) {
             dispatch(packActions.setQueryParams({ min: numbers[0], max: numbers[1] }))
         }
