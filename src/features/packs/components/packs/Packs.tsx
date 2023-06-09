@@ -1,9 +1,11 @@
+import {InputSearch} from '../../../../common/components/InputSearch/InputSearch.tsx';
+import {packNameParams} from '../../selectors.ts';
+import {PackTable} from '../packTable/PackTable.tsx';
+import {useAppDispatch, useAppSelector} from '../../../../app/hooks.ts';
 import {useEffect} from "react";
 import {useParams} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {pageCountParams, pageParamParams} from "../../selectors.ts";
 import {FilterPanels} from "../FilterPanels/FilterPanels.tsx";
-import {PackTable} from "../packTable/PackTable.tsx";
 import {Panels} from "../panels/Panels.tsx";
 import {getPacks, packActions} from "./pack-listSlice.ts";
 
@@ -11,10 +13,11 @@ import {getPacks, packActions} from "./pack-listSlice.ts";
 export const Packs = () => {
     const pageParam = useAppSelector(pageParamParams)
     const pageCountParam = useAppSelector(pageCountParams)
-
     const dispatch = useAppDispatch()
 
+    const packName = useAppSelector(packNameParams);
     const {packId} = useParams<{ packId: string }>()
+
     useEffect(() => {
         dispatch(getPacks())
     }, [pageCountParam])
@@ -23,12 +26,10 @@ export const Packs = () => {
         dispatch(packActions.setQueryParams({cardsPack_id: packId as string}))
     }, [packId, dispatch])
 
+    const onSearchChange = (search: string) => {
+        dispatch(packActions.setQueryParams({packName: search}));
+    };
 
-    /*
-  useEffect(() => {
-    dispatch(getPacks())
-  }, [packName])
-*/
     return (
         <div>
             <FilterPanels/>
