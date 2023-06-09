@@ -18,7 +18,7 @@ const initialState:InitialStateType = {
     packList: {
         minCardsCount: 0,
         maxCardsCount: 0,
-        page: 0,
+        page: 1,
         pageCount: 7,
         cardPacks: [],
         cardPacksTotalCount: 100,
@@ -30,19 +30,19 @@ const initialState:InitialStateType = {
         packName: '',
         user_id: '',
         block: false,
-        page: 0,
+        page: 1,
         pageCount: 7,
         sortPacks: '0updated',
     },
 }
 
 
-export const getPacks = createAsyncThunk<PacksResponseType, { cardsPack_id: string },ThunkAPIType>(
+export const getPacks = createAsyncThunk<PacksResponseType,void,ThunkAPIType>(
     "/cards/pack",
-    async (id, { rejectWithValue,getState }) => {
+    async (_, { rejectWithValue,getState }) => {
         try {
             const params = getState().packListReducer.queryParams
-            const response = await packAPI.getPacks({...params,...id});
+            const response = await packAPI.getPacks({...params});
             return  response.data
         } catch (e) {
             const error = errorUtils(e);
@@ -62,7 +62,6 @@ export const packListSlice = createSlice({
     extraReducers:builder => {
         builder
             .addCase(getPacks.fulfilled, (state, action) => {
-                console.log('appp', action.payload)
                state.packList = action.payload
             })
     }

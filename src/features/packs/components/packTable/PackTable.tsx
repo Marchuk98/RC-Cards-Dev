@@ -6,7 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
 import {useEffect} from "react";
-import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {getPacks} from "../packs/pack-listSlice.ts";
 import {TableContent} from "../tableContent/TableContent.tsx";
@@ -19,13 +18,12 @@ export const PackTable = () => {
     const dispatch = useAppDispatch()
     const pageParam = useAppSelector(state => state.packListReducer.queryParams.page)
     const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
-    const {packId} = useParams<{ packId: string }>()
+
 
     useEffect(() => {
-        dispatch(getPacks({cardsPack_id: packId as string}))
-    }, [dispatch, packId, pageParam, pageCountParam])
+        dispatch(getPacks())
+    }, [dispatch, pageParam,pageCountParam])
 
-    console.log(cardPacks)
 
     const headCells: HeaderCellType[] = [
         {id: 'name', label: 'Name'},
