@@ -1,7 +1,7 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../../../../common/type/types.ts";
-import {PacksResponseType, QueryParams} from "./types.ts";
-import {AddPackRequestType, packAPI} from "./pack.api.ts";
+import {AddPackRequestType, PacksResponseType, QueryParams} from "./types.ts";
+import { packAPI} from "./pack.api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
 import {RootState} from "../../../../app/store.ts";
 
