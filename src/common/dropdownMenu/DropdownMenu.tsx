@@ -25,7 +25,7 @@ export const SimpleMenu = () => {
         setAnchorElUser(null);
     }
     const redirectToProfileHandler = () => {
-        navigate("/forgotPassword")
+        navigate("/")
     }
     const redirectToLogoutHandler = useCallback(() =>{
         dispatch(authThunks.logout()).then(()=>{

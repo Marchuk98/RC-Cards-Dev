@@ -13,12 +13,12 @@ export const router = createHashRouter([
         element: <App/>,
         children: [
             {
-                path: "/",
-                element: <Profile/>,
-            },
-            {
                 path: "/login",
                 element: <Login/>,
+            },
+            {
+                path: "/",
+                element: <Profile/>,
             },
             {
                 path: "/register",

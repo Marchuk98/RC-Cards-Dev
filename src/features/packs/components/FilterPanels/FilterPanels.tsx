@@ -1,4 +1,5 @@
 import {useEffect} from "react";
+import {toast} from "react-toastify";
 // import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {ButtonsGroup} from "../../../../common/components/ButtonsGroup/ButtonsGroup.tsx";
@@ -51,9 +52,10 @@ export const FilterPanels = () => {
     }
     const onReset = () => {
         dispatch(packActions.resetQueryParams())
+        toast.warning("Filters reset")
     }
     const onAddPack = () =>{
-        dispatch(addPack({cardsPack: {name:"sdhglajdsf;"}}))
+        dispatch(addPack({cardsPack: {name:"sdhglajdsf;"}})).unwrap().then(()=>toast.success("Pack added"))
     }
     return (
         <Filters>

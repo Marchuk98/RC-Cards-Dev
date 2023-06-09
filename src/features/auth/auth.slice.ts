@@ -56,93 +56,69 @@ export const authMe = createAsyncThunk(
     async (_, {dispatch, rejectWithValue}) => {
         try {
             const response = await authApi.me()
-            dispatch(appActions.setIsInitialized({isInitialized: true}))
             return {profile: response.data, isInitialized: true}
         } catch (e) {
+            return rejectWithValue({error: e})
+        }
+        finally {
             dispatch(appActions.setIsInitialized({isInitialized: true}))
-            const error = errorUtils(e)
-            return rejectWithValue(error)
         }
     }
 )
 
 export const logout = createAsyncThunk('auth/logout',
-    async (_, {dispatch, rejectWithValue}) => {
-        dispatch(appActions.setStatus("loading"))
+    async (_, {rejectWithValue}) => {
         try {
             const response = await authApi.logout();
-            dispatch(appActions.setStatus("succeeded"))
             return {info: response.data.info}
         } catch (e) {
-            const error = errorUtils(e)
-            dispatch(appActions.setError({error}))
-            dispatch(appActions.setStatus('failed'))
-            return rejectWithValue(error)
+            return rejectWithValue({error: e})
         }
     })
 
 const registerUser = createAsyncThunk(
     'auth/register',
-    async (data: RegisterAuthType, {dispatch, rejectWithValue}) => {
-        dispatch(appActions.setStatus("loading"));
+    async (data: RegisterAuthType, {rejectWithValue}) => {
         try {
             const response = await authApi.register(data);
-            dispatch(appActions.setStatus("succeeded"))
             return {...response.data, info: "You have successfully registered"}
         } catch (e) {
-            const error = errorUtils(e)
-            dispatch(appActions.setError({error}))
-            dispatch(appActions.setStatus('failed'))
-            return rejectWithValue(error)
+            return rejectWithValue({error: e})
         }
     }
 );
 
 export const loginUser = createAsyncThunk(
     "auth/login",
-    async (data: LoginAuthType, {dispatch, rejectWithValue}) => {
-        dispatch(appActions.setStatus("loading"));
+    async (data: LoginAuthType, {rejectWithValue}) => {
         try {
             const response = await authApi.login(data)
-            dispatch(appActions.setStatus("succeeded"))
             return {profile: response.data};
         } catch (e) {
-            const error = errorUtils(e)
-            dispatch(appActions.setError({error}))
-            dispatch(appActions.setStatus("failed"))
-            return rejectWithValue(error)
+            return rejectWithValue({error: e})
         }
     }
 )
 const forgot = createAsyncThunk(
     "auth/forgot",
     async (data: ForgotEmailDataType, {dispatch, rejectWithValue}) => {
-        dispatch(appActions.setStatus("loading"))
         try {
             const response = await authApi.forgot(data)
             dispatch(appActions.setStatus("succeeded"))
             return {...response.data, isMailSent: true}
         } catch (e) {
-            const error = errorUtils(e)
-            dispatch(appActions.setError({error}))
-            dispatch(appActions.setStatus("failed"))
-            return rejectWithValue(error)
+            return rejectWithValue({error: e})
         }
     }
 )
 const newPassword = createAsyncThunk(
     "auth/newPassword",
     async (data: NewPasswordDataType, {dispatch, rejectWithValue}) => {
-        dispatch(appActions.setStatus("loading"))
         try {
             const response = await authApi.setNewPassword(data)
-            dispatch(appActions.setStatus("succeeded"))
             return {...response.data, isNewPasswordSet: true}
         } catch (e) {
-            const error = errorUtils(e)
-            dispatch(appActions.setError({error}))
-            dispatch(appActions.setStatus("failed"))
-            return rejectWithValue(error)
+            return rejectWithValue({error: e})
         }
     }
 )

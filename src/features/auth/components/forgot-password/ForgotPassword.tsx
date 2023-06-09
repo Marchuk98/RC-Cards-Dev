@@ -9,8 +9,9 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
 import {developers} from "../../../../app/common/constants/email-message.ts";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {useAppDispatch} from "../../../../app/hooks.ts";
 import {authActions, authThunks} from "../../auth.slice.ts";
 
 type ForgotPasswordType = {
@@ -20,10 +21,7 @@ type ForgotPasswordType = {
 export const ForgotPassword = () => {
     const navigate = useNavigate();
     const dispatch = useAppDispatch()
-    const isMailSent = useAppSelector((state)=>state.authReducer.isMailSent)
-    if(isMailSent){
-        navigate("/checkEmail")
-    }
+
     const {
         register,
         handleSubmit,
@@ -31,7 +29,11 @@ export const ForgotPassword = () => {
     } = useForm<ForgotPasswordType>();
 
     const onSubmit = (data: ForgotPasswordType) => {
-        dispatch(authThunks.forgot({...data, ...developers}));
+        dispatch(authThunks.forgot({...data, ...developers})).unwrap().then(
+            ()=>{
+                navigate("/checkEmail")
+            toast.success("Check your Email")}
+        );
         dispatch(authActions.setEmail({...data}))
     };
   return (

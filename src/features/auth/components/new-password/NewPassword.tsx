@@ -10,6 +10,7 @@ import Typography from "@mui/material/Typography";
 import React from "react";
 import {useForm} from "react-hook-form";
 import {useNavigate, useParams} from "react-router-dom";
+import {toast} from "react-toastify";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {authThunks} from "../../auth.slice.ts";
 
@@ -21,10 +22,10 @@ export const NewPassword = () => {
   const {resetPasswordToken} = useParams();
   const navigate = useNavigate()
   const [showPassword, setShowPassword] = React.useState(false);
-  const isNewPasswordSet = useAppSelector((state)=>state.authReducer.isNewPasswordSet)
-  if(isNewPasswordSet){
+  //const isNewPasswordSet = useAppSelector((state)=>state.authReducer.isNewPasswordSet)
+  /*if(isNewPasswordSet){
     navigate("/login")
-  }
+  }*/
   const dispatch = useAppDispatch()
   const {
     register,
@@ -33,7 +34,12 @@ export const NewPassword = () => {
   } = useForm<NewPasswordType>();
 
   const onSubmit = (data: NewPasswordType) => {
-    dispatch(authThunks.newPassword({...data, resetPasswordToken}));
+    dispatch(authThunks.newPassword({...data, resetPasswordToken}))
+        .unwrap()
+        .then(()=>{
+          navigate("/login")
+          toast.success("Password recovered")
+        })
   };
 
   const handleClickShowPassword = () => setShowPassword((show) => !show);

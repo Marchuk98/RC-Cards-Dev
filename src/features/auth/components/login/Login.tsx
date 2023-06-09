@@ -11,8 +11,9 @@ import {createTheme, ThemeProvider} from '@mui/material/styles';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import {useForm} from "react-hook-form";
-import {Navigate, useNavigate} from "react-router-dom";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {useNavigate} from "react-router-dom";
+import {toast} from "react-toastify";
+import {useAppDispatch} from "../../../../app/hooks.ts";
 import {authThunks} from "../../auth.slice.ts";
 
 
@@ -38,7 +39,6 @@ const defaultTheme = createTheme();
 export const Login = () => {
 
     const navigate = useNavigate();
-    const isLoggedIn = useAppSelector(state => state.authReducer.isLoggedIn)
     const dispatch = useAppDispatch()
     const form = useForm<FormValues>({
         defaultValues: {
@@ -60,12 +60,15 @@ export const Login = () => {
             password: password,
             rememberMe: rememberMe
         };
-        dispatch(authThunks.loginUser(requestData));
-    }
+        dispatch(authThunks.loginUser(requestData)).unwrap().then(
+            ()=>{toast.success("Hello (вставить имя когданибуть))0))")
+                navigate("/packs-item")}
+        );
+    }/*
 
     if(isLoggedIn){
        return <Navigate to={"/"}/>
-    }
+    }*/
 
     return (
         <ThemeProvider theme={defaultTheme}>

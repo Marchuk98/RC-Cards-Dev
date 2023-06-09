@@ -6,16 +6,29 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import IconButton from '@mui/material/IconButton';
 import Avatar from "@mui/material/Avatar";
+import {useNavigate} from "react-router-dom";
 import edit_photo from '../../../../assets/img/forgotPasswordFlow/CheckEmailIcon.svg';
 import {UserNameProfile} from "../../../../common/components/UserNameProfile/UserNameProfile.tsx";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {authThunks} from "../../auth.slice.ts";
 import {changeUserData} from "./profile.slice.ts";
-import {ChangeEvent} from "react";
+import {ChangeEvent, useCallback} from "react";
 
 export const Profile = () => {
+    const navigate = useNavigate()
     const dispatch = useAppDispatch()
-
     const getProfile = useAppSelector(state => state.profileReducer.profile)
+    const isLoggedIn = useAppSelector(state => state.authReducer.isLoggedIn)
+
+    if(!isLoggedIn){
+        navigate("/login")
+    }
+
+    const redirectToLogoutHandler = useCallback(() =>{
+        dispatch(authThunks.logout()).unwrap().then(()=>{
+            navigate("/login")
+        })
+    },[])
 
     const { avatar, email, name }  = getProfile
 
@@ -40,7 +53,6 @@ export const Profile = () => {
             reader.readAsDataURL(file);
         }
     };
-
   return(
       <Paper elevation={3} sx={{padding: "25px",margin:'50px auto',maxWidth: "413px"}}>
         <Container component="main"  >
@@ -91,6 +103,7 @@ export const Profile = () => {
               <Button
                   type="submit"
                   fullWidth
+                  onClick={redirectToLogoutHandler}
                   variant="contained"
                   sx={{
                       mt: 4,

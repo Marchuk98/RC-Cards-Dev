@@ -1,4 +1,5 @@
 import {useForm} from 'react-hook-form';
+import {toast} from "react-toastify";
 import {useAppDispatch} from "../../../../app/hooks.ts";
 import {authThunks} from "../../auth.slice.ts";
 import Button from '@mui/material/Button';
@@ -39,8 +40,10 @@ export const Register = () => {
             email: email,
             password: password,
         };
-        dispatch(authThunks.registerUser(requestData));
-        navigate("/login")
+        dispatch(authThunks.registerUser(requestData)).unwrap().then(
+            ()=>{navigate("/login")
+            toast.success("Succes register")}
+        );
     };
 
     return (
