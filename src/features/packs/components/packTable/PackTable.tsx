@@ -10,6 +10,7 @@ import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {getPacks} from "../packs/pack-listSlice.ts";
 import {TableContent} from "../tableContent/TableContent.tsx";
 import {HeaderCellType} from "../tableHeader/TableHeader.tsx";
+import {useFilters} from "../../hooks/use-filters.ts";
 
 export const PackTable = () => {
 
@@ -18,12 +19,14 @@ export const PackTable = () => {
     const dispatch = useAppDispatch()
     const pageParam = useAppSelector(state => state.packListReducer.queryParams.page)
     const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
-
+    const sortPack = useAppSelector(state => state.packListReducer.queryParams.sortPacks)
+    const status = useAppSelector(state => state.packListReducer.status)
 
     useEffect(() => {
         dispatch(getPacks())
-    }, [dispatch, pageParam,pageCountParam])
+    }, [dispatch, pageParam, pageCountParam,sortPack])
 
+    const {sortTableByHeader} = useFilters()
 
     const headCells: HeaderCellType[] = [
         {id: 'name', label: 'Name'},
@@ -88,7 +91,13 @@ export const PackTable = () => {
     ))
     return (
         <>
-            <TableContent headerCells={headCells}>{packArrayItem}</TableContent>
+            <TableContent
+                headerCells={headCells}
+                sortTableHandler={sortTableByHeader}
+                status={status}
+            >
+                {packArrayItem}
+            </TableContent>
         </>
     )
 }
