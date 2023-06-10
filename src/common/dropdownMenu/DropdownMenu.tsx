@@ -33,6 +33,10 @@ export const SimpleMenu = () => {
         })
     },[])
 
+    const redirectToPacksItemHandler = ()=> {
+        navigate('/packs-item')
+    }
+
     const handleOpenUserMenu = (event: React.MouseEvent<HTMLElement>) => {
         setAnchorElUser(event.currentTarget);
     };
@@ -75,6 +79,11 @@ export const SimpleMenu = () => {
                     <MenuItem onClick={redirectToLogoutHandler} sx={{ display: 'flex', alignItems: 'center', columnGap: 2,padding:"7px" }}>
                         {/*Вставить иконку выхода*/}
                         Logout
+                    </MenuItem>
+                    <Divider />
+                    <MenuItem onClick={redirectToPacksItemHandler} sx={{ display: 'flex', alignItems: 'center', columnGap: 2,padding:"7px" }}>
+                        {/*Вставить иконку пачки*/}
+                        Packs
                     </MenuItem>
                 </Menu>
             </Box>
