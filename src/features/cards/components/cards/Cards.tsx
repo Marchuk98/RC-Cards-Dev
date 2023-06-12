@@ -1,5 +1,9 @@
-import React from "react";
+import {CardsPackTable} from "../cardsPackTable/CardsPackTable.tsx";
 
 export const Cards = () => {
-  return <div>Cards</div>;
+    return (
+        <div>
+            <CardsPackTable/>
+        </div>
+    )
 };
