@@ -8,9 +8,10 @@ import TableRow from "@mui/material/TableRow";
 import {useEffect} from "react";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {getPacks} from "../packs/pack-listSlice.ts";
-import {TableContent} from "../tableContent/TableContent.tsx";
-import {HeaderCellType} from "../tableHeader/TableHeader.tsx";
+import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
+import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
 import {useFilters} from "../../hooks/use-filters.ts";
+// import {useNavigate, useParams} from "react-router-dom";
 
 export const PackTable = () => {
 
@@ -21,6 +22,9 @@ export const PackTable = () => {
     const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
     const sortPack = useAppSelector(state => state.packListReducer.queryParams.sortPacks)
     const status = useAppSelector(state => state.packListReducer.status)
+    // const navigate = useNavigate()
+    // const { packId } = useParams<{ packId: string }>()
+    // const navigateToCards = (packId:string | undefined) => navigate(`/pack/learn/${packId}`)
 
     useEffect(() => {
         dispatch(getPacks())
@@ -36,7 +40,7 @@ export const PackTable = () => {
         {id: 'empty', label: 'Actions'},
     ]
 
-    const packArrayItem = cardPacks.map(el => (
+    const packsItem = cardPacks.map(el => (
         <TableRow hover key={el._id}>
             <TableCell component="th" scope="row">
                 <Box sx={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -72,8 +76,7 @@ export const PackTable = () => {
                     <>
                         <IconButton
                             sx={{padding: "15px"}}
-                            onClick={() => {
-                            }}
+                            onClick={() => {}}
                         >
                             <BorderColorOutlinedIcon/>
                         </IconButton>
@@ -96,7 +99,7 @@ export const PackTable = () => {
                 sortTableHandler={sortTableByHeader}
                 status={status}
             >
-                {packArrayItem}
+                {packsItem}
             </TableContent>
         </>
     )

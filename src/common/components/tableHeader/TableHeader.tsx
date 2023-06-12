@@ -5,7 +5,7 @@ import TableCell from "@mui/material/TableCell";
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 import {useState} from "react";
-import {StatusType} from "../../../../common/type/types.ts";
+import {StatusType} from "../../type/types.ts";
 
 type Order = 'asc' | 'desc'
 

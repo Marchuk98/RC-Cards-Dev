@@ -7,6 +7,7 @@ import {Login} from "../../features/auth/components/login/Login.tsx";
 import {Register} from "../../features/auth/components/Register/Register.tsx";
 import {Packs} from "../../features/packs/components/packs/Packs.tsx";
 import App from "../../app/App.tsx";
+import {Cards} from "../../features/cards/components/cards/Cards.tsx";
 
 export const router = createHashRouter([
     {
@@ -43,6 +44,10 @@ export const router = createHashRouter([
             {
                 path: "/packs-item",
                 element: <Packs/>,
+            },
+            {
+                path: "/packs-cards",
+                element: <Cards/>,
             },
         ],
     },

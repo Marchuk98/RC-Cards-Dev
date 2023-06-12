@@ -3,7 +3,7 @@ import TableContainer from "@mui/material/TableContainer";
 import Table from "@mui/material/Table";
 import {HeaderCellType, TableHeader} from "../tableHeader/TableHeader.tsx";
 import TableBody from "@mui/material/TableBody";
-import {StatusType} from "../../../../common/type/types.ts";
+import {StatusType} from "../../type/types.ts";
 
 
 type TableContentPropsType = {
