@@ -1,6 +1,7 @@
 import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../../../../common/type/types.ts";
 import {RootState} from "../../../../app/store.ts";
+import {learnActions} from "../../../learn/learn-slice.ts";
 import {CardQueryParams, CardsResponseType} from "./types.ts";
 import {packCardsApi} from "./packCards-api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
@@ -29,6 +30,7 @@ const initialState:InitialStateType = {
         packCreated:'',
         packPrivate:false,
         packUpdated:'',
+        packName: ""
 
     },
     queryParams: {
@@ -46,10 +48,11 @@ const initialState:InitialStateType = {
 
 export const getCards  = createAsyncThunk<CardsResponseType,{ cardsPack_id: string },ThunkAPIType>(
     'pack-cards/getCards',
-    async(id,{rejectWithValue,getState}) => {
+    async(id,{rejectWithValue,getState, dispatch}) => {
         const params = getState().packCardsReducer.queryParams
         try {
             const response = await packCardsApi.getCards({...params,...id});
+            dispatch(learnActions.setLearnCards({ cards: response.data.cards }))
             return response.data
         }catch (e){
             const error = errorUtils(e)
@@ -67,6 +70,9 @@ export const packCardSlice = createSlice({
         },
         resetQueryParams: state => {
             state.queryParams = initialState.queryParams
+        },
+        resetPackData: () => {
+            return initialState
         },
     },
     extraReducers:builder => {
