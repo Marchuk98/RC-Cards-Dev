@@ -26,6 +26,7 @@ export const PackTable = () => {
     const navigateToCards = (id: string) => {
         return () => navigate(`/packs-cards/${id}`)
     }
+    const navigateToLearn = (packId: string) => navigate(`/packs-item/learn/${packId}`)
 
     useEffect(() => {
         dispatch(getPacks())
@@ -70,8 +71,7 @@ export const PackTable = () => {
                 <IconButton
                     sx={{padding: "15px"}}
                     disabled={el.cardsCount === 0}
-                    onClick={() => {
-                    }}
+                    onClick={()=>navigateToLearn(el._id)}
                 >
                     <SchoolOutlinedIcon/>
                 </IconButton>
