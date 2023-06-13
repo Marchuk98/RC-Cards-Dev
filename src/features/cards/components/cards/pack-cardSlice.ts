@@ -18,25 +18,28 @@ type InitialStateType = {
 
 const initialState:InitialStateType = {
     packCards: {
-      packUserId:'',
-        cardPacks:[],
-        page:1,
-        pageCount:7,
-        minGrade:0,
-        maxGrade:0,
-        cardsTotalCount:100,
-        packName:'',
-        packDeckCover:'',
+        packUserId: '',
+        cards: [],
+        page: 0,
+        pageCount: 7,
+        minGrade: 0,
+        maxGrade: 0,
+        cardsTotalCount: 100,
+        packDeckCover: '',
+        packCreated:'',
+        packPrivate:false,
+        packUpdated:'',
+
     },
     queryParams: {
         min: 0,
         max: 0,
-        cardQuestion:'',
+        cardQuestion: '',
         cardsPack_id: '',
-        page: 1,
+        page: 0,
         pageCount: 7,
         sortCards: '0updated',
-        cardAnswer:'',
+        cardAnswer: '',
     },
     status: "idle"
 }
@@ -45,7 +48,6 @@ export const getCards  = createAsyncThunk<CardsResponseType,{ cardsPack_id: stri
     'pack-cards/getCards',
     async(id,{rejectWithValue,getState}) => {
         const params = getState().packCardsReducer.queryParams
-
         try {
             const response = await packCardsApi.getCards({...params,...id});
             return response.data

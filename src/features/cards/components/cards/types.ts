@@ -1,8 +1,8 @@
 
 export type CardItemType = {
+    _id: string
     answer: string
     question: string
-    cardsPack_id: string
     questionImg: string
     answerImg: string
     grade: number
@@ -10,20 +10,22 @@ export type CardItemType = {
     user_id: string
     created: string
     updated: string
-    _id: string
+    cardsPack_id: string
 }
 
 
 export type CardsResponseType = {
-    cardPacks:CardItemType[]
-    packName: string
+    cards: CardItemType[]
     cardsTotalCount: number
     maxGrade: number
     minGrade: number
     page: number
+    packUpdated: string
+    packCreated: string
+    packDeckCover: string
+    packPrivate: boolean
     pageCount: number
     packUserId: string
-    packDeckCover: string
 }
 
 export type CardQueryParams = {

@@ -11,7 +11,7 @@ import {getPacks} from "../packs/pack-listSlice.ts";
 import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
 import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
 import {useFilters} from "../../hooks/use-filters.ts";
-// import {useNavigate, useParams} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export const PackTable = () => {
 
@@ -22,9 +22,10 @@ export const PackTable = () => {
     const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
     const sortPack = useAppSelector(state => state.packListReducer.queryParams.sortPacks)
     const status = useAppSelector(state => state.packListReducer.status)
-    // const navigate = useNavigate()
-    // const { packId } = useParams<{ packId: string }>()
-    // const navigateToCards = (packId:string | undefined) => navigate(`/pack/learn/${packId}`)
+    const navigate = useNavigate()
+    const navigateToCards = (id: string) => {
+        return () => navigate(`/packs-cards/${id}`)
+    }
 
     useEffect(() => {
         dispatch(getPacks())
@@ -53,7 +54,9 @@ export const PackTable = () => {
                             background: "transparent",
                             display: "flex",
                             alignItems: "center"
-                        }}>
+                        }}
+                        onClick={navigateToCards(el._id)}
+                    >
                         {el.name}
                         {el.deckCover && (
                             <img style={{height: '35px', marginLeft: '20px'}} alt="img" src={el.deckCover}/>)}
