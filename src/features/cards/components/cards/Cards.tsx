@@ -1,10 +1,13 @@
 import {CardsPackTable} from "../cardsPackTable/CardsPackTable.tsx";
 import {ImageCard} from "../ImageWithCard/ImageCard.tsx";
 import {useAppSelector} from "../../../../app/hooks.ts";
+import {useFetchCard} from "../../hooks/useFetchCard.ts";
 
 export const Cards = () => {
 
     const cardImage = useAppSelector(state => state.packCardsReducer.packCards.packDeckCover)
+
+    useFetchCard()
 
     return (
         <div>

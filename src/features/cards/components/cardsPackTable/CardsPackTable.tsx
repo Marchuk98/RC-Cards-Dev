@@ -4,40 +4,14 @@ import IconButton from "@mui/material/IconButton";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
 import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
-import {useEffect} from "react";
-import {useParams} from "react-router-dom";
 import {Rating} from "@mui/material";
-import {getCards, packCardsActions} from "../cards/pack-cardSlice.ts";
+import {useCardsPack} from "../../hooks/useCardsPack.ts";
 
 
 export const CardsPackTable = () => {
 
-    const getProfileData = useAppSelector(state => state.profileReducer.profile)
-    const cardPacks = useAppSelector(state => state.packCardsReducer.packCards.cards)
-    const status = useAppSelector(state => state.packCardsReducer.status)
-    const dispatch = useAppDispatch()
-    const cardUserId = useAppSelector(state => state.packCardsReducer.packCards.packUserId)
-    const pageParam = useAppSelector(state => state.packListReducer.queryParams.page)
-    const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
-    const sortPack = useAppSelector(state => state.packListReducer.queryParams.sortPacks)
-    const { packId } = useParams<{ packId: string }>()
-
-    useEffect(() => {
-        dispatch(getCards({ cardsPack_id: packId as string }))
-    }, [pageParam, pageCountParam, sortPack])
-
-    useEffect(() => {
-        dispatch(packCardsActions.setQueryParams({ cardsPack_id: packId as string }))
-
-        return () => {
-            dispatch(packCardsActions.resetQueryParams())
-        }
-    }, [])
-
-    const _id = getProfileData._id
-    const isMe = cardUserId === _id
+    const {cardPacks,isMe,status} = useCardsPack()
 
     const headCells: HeaderCellType[] = [
         {id: 'question', label: 'Question'},
