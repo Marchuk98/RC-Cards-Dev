@@ -1,4 +1,4 @@
-import {CustomPagination} from '../../pagination/Pagination.tsx';
+import {CustomPagination} from '../../../../common/components/pagination/Pagination.tsx';
 import {useAppDispatch, useAppSelector} from '../../../../app/hooks.ts';
 import {useCallback} from 'react';
 import {packActions} from '../packs/pack-listSlice.ts';

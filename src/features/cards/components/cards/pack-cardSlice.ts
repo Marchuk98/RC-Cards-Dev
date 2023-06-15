@@ -20,7 +20,7 @@ const initialState:InitialStateType = {
     packCards: {
         packUserId: '',
         cards: [],
-        page: 0,
+        page: 1,
         pageCount: 7,
         minGrade: 0,
         maxGrade: 0,
@@ -36,7 +36,7 @@ const initialState:InitialStateType = {
         max: 0,
         cardQuestion: '',
         cardsPack_id: '',
-        page: 0,
+        page: 1,
         pageCount: 7,
         sortCards: '0updated',
         cardAnswer: '',
