@@ -5,6 +5,7 @@ import {ForgotPassword} from "../../features/auth/components/forgot-password/For
 import {Profile} from "../../features/auth/components/profile/Profile.tsx";
 import {Login} from "../../features/auth/components/login/Login.tsx";
 import {Register} from "../../features/auth/components/Register/Register.tsx";
+import {Learn} from "../../features/learn/Learn.tsx";
 import {Packs} from "../../features/packs/components/packs/Packs.tsx";
 import App from "../../app/App.tsx";
 import {Cards} from "../../features/cards/components/cards/Cards.tsx";
@@ -48,6 +49,10 @@ export const router = createHashRouter([
             {
                 path: "/packs-cards/:packId",
                 element: <Cards/>,
+            },
+            {
+                path: "/packs-item/learn/:packId",
+                element: <Learn/>,
             },
         ],
     },

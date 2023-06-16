@@ -26,6 +26,7 @@ export type CardsResponseType = {
     packPrivate: boolean
     pageCount: number
     packUserId: string
+    packName: string
 }
 
 export type CardQueryParams = {
@@ -37,4 +38,18 @@ export type CardQueryParams = {
     sortCards: string
     page: number
     pageCount: number
+}
+export type UpdateGradeRequestType = {
+    grade: number
+    card_id: string
+}
+export type UpdateGradeResponseType = {
+    updatedGrade: {
+        _id: string
+        cardsPack_id: string
+        card_id: string
+        user_id: string
+        grade: number
+        shots: number
+    }
 }
