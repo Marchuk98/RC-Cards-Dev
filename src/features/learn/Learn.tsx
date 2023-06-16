@@ -2,7 +2,7 @@ import {useAppSelector} from "../../app/hooks.ts";
 import {CardSkeleton} from "../../common/components/card-skeleton/CardSkeleton.tsx";
 import {NavigateToBack} from "../../common/components/NavigateToBack/NavigateToBack.tsx";
 import {Title} from "../../common/components/Title/Title.tsx";
-import {packCardPacksName, packStatus} from "../cards/components/cards/cardSelectors.ts";
+import {cardStatus, packCardPacksName} from "../cards/components/cards/cardSelectors.ts";
 import {useFetchPack} from "../cards/hooks/use-fetch-pack.ts";
 import {LearnCard} from "./components/LearnCard/LearnCard.tsx";
 import {useRandomCard} from "./hooks/useRandomCard.ts";
@@ -16,7 +16,7 @@ export const Learn = () => {
 
     const packName = useAppSelector(packCardPacksName)
 
-    const status = useAppSelector(packStatus)
+    const status = useAppSelector(cardStatus)
 
     const learnStatus = useAppSelector(learnPageStatus)
 

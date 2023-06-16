@@ -11,7 +11,7 @@ export const Question = () => {
                 sx={{ marginBottom: 1.5, display: 'flex', flexDirection: 'row', alignItems: 'center' }}
             >
                 <b>Question:&nbsp;</b>
-                {card.questionImg!=="no_image"&&card.questionImg!==""&&card.questionImg!==undefined ? (
+                {card.questionImg!=="no_image"&&card.questionImg!==" "&&card.questionImg !== undefined ? (
                     <img style={{ height: '35px', marginLeft: '20px' }} alt="img" src={card.questionImg} />
                 ) : (
                     card.question

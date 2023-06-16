@@ -23,7 +23,7 @@ export const useFetchPack = () => {
         dispatch(packCardsActions.setQueryParams({ cardsPack_id: packId as string }))
 
         return () => {
-            dispatch(packCardsActions.resetPackData())
+            dispatch(packCardsActions.resetCardData())
         }
     }, [])
 }

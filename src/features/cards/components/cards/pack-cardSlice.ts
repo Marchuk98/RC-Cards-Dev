@@ -1,4 +1,4 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../../../../common/type/types.ts";
 import {RootState} from "../../../../app/store.ts";
 import {learnActions} from "../../../learn/learn-slice.ts";
@@ -59,6 +59,9 @@ export const getCards  = createAsyncThunk<CardsResponseType,{ cardsPack_id: stri
             return rejectWithValue(error)
         }
 })
+const pending = isPending(getCards)
+const fulfilled = isFulfilled(getCards)
+const rejected = isRejected(getCards)
 
 
 export const packCardSlice = createSlice({
@@ -71,7 +74,7 @@ export const packCardSlice = createSlice({
         resetQueryParams: state => {
             state.queryParams = initialState.queryParams
         },
-        resetPackData: () => {
+        resetCardData: () => {
             return initialState
         },
     },
@@ -79,6 +82,16 @@ export const packCardSlice = createSlice({
         builder
             .addCase(getCards.fulfilled,(state, action)=>{
                 state.packCards = action.payload
+                state.status = 'succeeded'
+            })
+            .addMatcher(pending, state => {
+                state.status = 'loading'
+            })
+            .addMatcher(fulfilled, state => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(rejected, state => {
+                state.status = 'failed'
             })
     },
 })

@@ -17,7 +17,7 @@ export const Answer = () => {
                     sx={{ paddingBottom: 2, display: 'flex', flexDirection: 'row', alignItems: 'center' }}
                 >
                     <b>Answer:&nbsp;</b>
-                    {card.questionImg!=="no_image"&&card.questionImg!==""&&card.questionImg!==undefined ? <img style={imageStyle} alt="img" src={card.answerImg} /> : card.answer}
+                    {card.questionImg!=="no_image"&&card.questionImg!==""&&card.questionImg !== undefined ? <img style={imageStyle} alt="img" src={card.answerImg} /> : card.answer}
                 </Typography>
                 <AnswerForm />
             </Box>
