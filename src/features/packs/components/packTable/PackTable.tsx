@@ -5,32 +5,18 @@ import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import TableCell from "@mui/material/TableCell";
 import TableRow from "@mui/material/TableRow";
-import {useEffect} from "react";
-import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
-import {getPacks} from "../packs/pack-listSlice.ts";
 import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
 import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
 import {useFilters} from "../../hooks/use-filters.ts";
-import {useNavigate} from "react-router-dom";
+import {usePackList} from "../../hooks/usePackList.ts";
+import {useModals} from "../../../modals/hooks/useModals.ts";
+import {useProfile} from "../../../../app/hooks/useProfile/useProfile.ts";
 
 export const PackTable = () => {
 
-    const getProfileData = useAppSelector(state => state.profileReducer.profile)
-    const cardPacks = useAppSelector(state => state.packListReducer.packList.cardPacks)
-    const dispatch = useAppDispatch()
-    const pageParam = useAppSelector(state => state.packListReducer.queryParams.page)
-    const pageCountParam = useAppSelector(state => state.packListReducer.queryParams.pageCount)
-    const sortPack = useAppSelector(state => state.packListReducer.queryParams.sortPacks)
-    const status = useAppSelector(state => state.packListReducer.status)
-    const navigate = useNavigate()
-    const navigateToCards = (id: string) => {
-        return () => navigate(`/packs-cards/${id}`)
-    }
-
-    useEffect(() => {
-        dispatch(getPacks())
-    }, [dispatch, pageParam, pageCountParam,sortPack])
-
+    const getProfileData = useProfile()
+    const {status,cardPacks,navigateToCards} = usePackList()
+    const { showModal } = useModals()
     const {sortTableByHeader} = useFilters()
 
     const headCells: HeaderCellType[] = [
@@ -70,8 +56,7 @@ export const PackTable = () => {
                 <IconButton
                     sx={{padding: "15px"}}
                     disabled={el.cardsCount === 0}
-                    onClick={() => {
-                    }}
+                    onClick={() => {}}
                 >
                     <SchoolOutlinedIcon/>
                 </IconButton>
@@ -79,14 +64,13 @@ export const PackTable = () => {
                     <>
                         <IconButton
                             sx={{padding: "15px"}}
-                            onClick={() => {}}
+                            onClick={showModal('edit', { name: el.name, _id: el._id, deckCover: el.deckCover })}
                         >
                             <BorderColorOutlinedIcon/>
                         </IconButton>
                         <IconButton
                             sx={{padding: "15px"}}
-                            onClick={() => {
-                            }}
+                            onClick={showModal('delete', { name: el.name, _id: el._id })}
                         >
                             <DeleteOutlinedIcon/>
                         </IconButton>

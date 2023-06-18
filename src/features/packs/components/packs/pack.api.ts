@@ -1,5 +1,12 @@
 import { instanceHeroku} from "../../../../common/api/api.ts";
-import {AddPackRequestType, AddPackType, PacksResponseType, QueryParams} from "./types.ts";
+import {
+    AddPackRequestType,
+    AddPackType, DeleteResponseType,
+    PacksResponseType,
+    QueryParams,
+    UpdatePackRequestType,
+    UpdateResponseType
+} from "./types.ts";
 
 
 export const packAPI = {
@@ -11,5 +18,11 @@ export const packAPI = {
     addPack(data: AddPackRequestType) {
         return instanceHeroku.post<AddPackType>('cards/pack', data)
     },
+    updatePack(data:UpdatePackRequestType) {
+        return instanceHeroku.put<UpdateResponseType>('/cards/pack', data)
+    },
+    deletePack(id:string){
+      return instanceHeroku.delete<DeleteResponseType>(`/cards/pack?id=${id}`)
+    }
 }
 

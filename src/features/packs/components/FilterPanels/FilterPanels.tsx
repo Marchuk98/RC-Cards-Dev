@@ -15,7 +15,7 @@ import {
     packListMinCardsCount, packListPage, packListPageCount,
     packListStatus,
     packNameParams, userIdParams
-} from "../../selectors.ts";
+} from "../packs/selectors.ts";
 import {addPack, getPacks, packActions} from "../packs/pack-listSlice.ts";
 
 export const FilterPanels = () => {
