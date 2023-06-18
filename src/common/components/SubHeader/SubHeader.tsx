@@ -1,13 +1,14 @@
 import Button from '@mui/material/Button'
 import Grid from '@mui/material/Grid'
-import Typography from "@mui/material/Typography";
 import {FC} from 'react'
+import {Title} from "../Title/Title.tsx";
 
 type SubHeaderType = {
     title: string
     titleButton: string
     onClick?: () => void
     disabled: boolean
+    isLoading:boolean
 }
 
 export const SubHeader: FC<SubHeaderType> = ({
@@ -15,18 +16,17 @@ export const SubHeader: FC<SubHeaderType> = ({
                                                  titleButton,
                                                  title,
                                                  disabled,
+                                                 isLoading
                                              }) => {
     return (
         <Grid container justifyContent={'space-between'} alignItems={'center'} sx={{paddingTop: 1, marginBottom: 3}}>
-            <Typography sx={{
-                flex: '0 0 25%',
+            <Title sx={{flex: '0 0 25%',
                 whiteSpace: 'nowrap',
                 overflow: 'hidden',
                 textOverflow: ' ellipsis',
-                maxWidth: 320,
-            }} variant={'h1'} fontSize={22} fontWeight={600} textAlign={"left"}>
+                maxWidth: 320,}} isLoading={isLoading} align={'left'}>
                 {title}
-            </Typography>
+            </Title>
             {titleButton && (
                 <Button onClick={onClick} variant={'contained'} disabled={disabled}>
                     {titleButton}

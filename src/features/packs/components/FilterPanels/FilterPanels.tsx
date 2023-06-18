@@ -60,6 +60,7 @@ export const FilterPanels = () => {
     return (
         <Filters>
             <SubHeader
+                isLoading={status === 'loading'}
                 title={'Pack list'}
                 titleButton={'Add new pack'}
                 disabled={status === 'loading'}

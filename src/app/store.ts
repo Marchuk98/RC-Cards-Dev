@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit"
 import {authReducer} from "../features/auth/auth.slice.ts";
+import {learnReducer} from "../features/learn/learn-slice.ts";
 import {appReducer} from "./app.slice.ts";
 import {profileReducer} from "../features/auth/components/profile/profile.slice.ts";
 import {packListReducer} from "../features/packs/components/packs/pack-listSlice.ts";
@@ -14,6 +15,7 @@ export const store = configureStore({
     profileReducer,
     packListReducer,
     packCardsReducer,
+    learnReducer,
     modalsReducer
   },
 })

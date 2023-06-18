@@ -1,6 +1,7 @@
-import {createAsyncThunk, createSlice, PayloadAction} from "@reduxjs/toolkit";
+import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
 import {StatusType} from "../../../../common/type/types.ts";
 import {RootState} from "../../../../app/store.ts";
+import {learnActions} from "../../../learn/learn-slice.ts";
 import {CardQueryParams, CardsResponseType} from "./types.ts";
 import {packCardsApi} from "./packCards-api.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
@@ -29,6 +30,7 @@ const initialState:InitialStateType = {
         packCreated:'',
         packPrivate:false,
         packUpdated:'',
+        packName: ""
 
     },
     queryParams: {
@@ -46,16 +48,20 @@ const initialState:InitialStateType = {
 
 export const getCards  = createAsyncThunk<CardsResponseType,{ cardsPack_id: string },ThunkAPIType>(
     'pack-cards/getCards',
-    async(id,{rejectWithValue,getState}) => {
+    async(id,{rejectWithValue,getState, dispatch}) => {
         const params = getState().packCardsReducer.queryParams
         try {
             const response = await packCardsApi.getCards({...params,...id});
+            dispatch(learnActions.setLearnCards({ cards: response.data.cards }))
             return response.data
         }catch (e){
             const error = errorUtils(e)
             return rejectWithValue(error)
         }
 })
+const pending = isPending(getCards)
+const fulfilled = isFulfilled(getCards)
+const rejected = isRejected(getCards)
 
 
 export const packCardSlice = createSlice({
@@ -68,11 +74,24 @@ export const packCardSlice = createSlice({
         resetQueryParams: state => {
             state.queryParams = initialState.queryParams
         },
+        resetCardData: () => {
+            return initialState
+        },
     },
     extraReducers:builder => {
         builder
             .addCase(getCards.fulfilled,(state, action)=>{
                 state.packCards = action.payload
+                state.status = 'succeeded'
+            })
+            .addMatcher(pending, state => {
+                state.status = 'loading'
+            })
+            .addMatcher(fulfilled, state => {
+                state.status = 'succeeded'
+            })
+            .addMatcher(rejected, state => {
+                state.status = 'failed'
             })
     },
 })

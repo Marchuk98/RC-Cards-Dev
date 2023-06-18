@@ -11,6 +11,7 @@ import {useFilters} from "../../hooks/use-filters.ts";
 import {usePackList} from "../../hooks/usePackList.ts";
 import {useModals} from "../../../modals/hooks/useModals.ts";
 import {useProfile} from "../../../../app/hooks/useProfile/useProfile.ts";
+import {useNavigate} from "react-router-dom";
 
 export const PackTable = () => {
 
@@ -18,6 +19,10 @@ export const PackTable = () => {
     const {status,cardPacks,navigateToCards} = usePackList()
     const { showModal } = useModals()
     const {sortTableByHeader} = useFilters()
+
+    const navigate = useNavigate()
+
+    const navigateToLearn = (packId: string) => navigate(`/packs-item/learn/${packId}`)
 
     const headCells: HeaderCellType[] = [
         {id: 'name', label: 'Name'},
@@ -56,7 +61,7 @@ export const PackTable = () => {
                 <IconButton
                     sx={{padding: "15px"}}
                     disabled={el.cardsCount === 0}
-                    onClick={() => {}}
+                    onClick={()=>navigateToLearn(el._id)}
                 >
                     <SchoolOutlinedIcon/>
                 </IconButton>
