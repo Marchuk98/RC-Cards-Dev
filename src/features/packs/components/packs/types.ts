@@ -47,3 +47,18 @@ export type AddPackType = {
     deckCover?: string
     private?: boolean
 }
+
+export type UpdatePackType = {
+    _id: string
+    name: string
+    deckCover: string
+}
+export type UpdatePackRequestType = {
+    cardsPack: UpdatePackType
+}
+export type UpdateResponseType = {
+    updatedCardsPack: PackItemType
+}
+export type DeleteResponseType = {
+    deletedCardsPack: PackItemType
+}
