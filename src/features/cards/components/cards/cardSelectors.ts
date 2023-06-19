@@ -5,5 +5,5 @@ export const packCardPacksName = (state: RootState) => state.packCardsReducer.pa
 export const pageParams = (state: RootState) => state.packCardsReducer.queryParams.page
 export const pageCountParams = (state: RootState) => state.packCardsReducer.queryParams.pageCount
 export const sortPacksParams = (state: RootState) => state.packCardsReducer.queryParams.sortCards
-export const packQuestionParams = (state: RootState) => state.packCardsReducer.queryParams.cardQuestion
+export const cardQuestionParams = (state: RootState) => state.packCardsReducer.queryParams.cardQuestion
 
