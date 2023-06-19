@@ -53,3 +53,35 @@ export type UpdateGradeResponseType = {
         shots: number
     }
 }
+
+export type AddCardRequestType = {
+    card: AddCardType
+}
+
+export type AddCardType = {
+    cardsPack_id: string
+    question?: string
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+}
+
+export type UpdateCardType = {
+    answer?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+    _id: string
+    question: string
+}
+
+export type UpdateCardRequestType = {
+    card: UpdateCardType
+}
