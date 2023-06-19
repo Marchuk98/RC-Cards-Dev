@@ -1,17 +1,19 @@
-import TableRow from "@mui/material/TableRow";
-import TableCell from "@mui/material/TableCell";
-import IconButton from "@mui/material/IconButton";
 import BorderColorOutlinedIcon from "@mui/icons-material/BorderColorOutlined";
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
-import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
-import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
 import {Rating} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import TableCell from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
+import {TableContent} from "../../../../common/components/tableContent/TableContent.tsx";
+import {HeaderCellType} from "../../../../common/components/tableHeader/TableHeader.tsx";
+import {useModals} from "../../../modals/hooks/useModals.ts";
 import {useCardsPack} from "../../hooks/useCardsPack.ts";
 
 
 export const CardsPackTable = () => {
 
-    const {cardPacks,isMe,status} = useCardsPack()
+    const {cardPacks, isMe, status} = useCardsPack()
+    const {showModal} = useModals()
 
     const headCells: HeaderCellType[] = [
         {id: 'question', label: 'Question'},
@@ -31,16 +33,16 @@ export const CardsPackTable = () => {
                         textOverflow: ' ellipsis',
                     }}
                 >
-                    {el.questionImg!=="no_image"&&el.questionImg!== undefined && el.questionImg !== "" ? (
-                        <img style={{ height: '35px', marginLeft: '20px' }} alt="img" src={el.questionImg} />
+                    {el.questionImg !== "no_image" && el.questionImg !== undefined && el.questionImg !== "" ? (
+                        <img style={{height: '35px', marginLeft: '20px'}} alt="img" src={el.questionImg}/>
                     ) : (
                         el.question
                     )}
                 </div>
             </TableCell>
             <TableCell align="left">
-                {el.answerImg!=="no_image"&&el.answerImg !== undefined && el.answerImg !== "" ? (
-                    <img style={{ height: '35px', marginLeft: '20px' }} alt="img" src={el.answerImg} />
+                {el.answerImg !== "no_image" && el.answerImg !== undefined && el.answerImg !== "" ? (
+                    <img style={{height: '35px', marginLeft: '20px'}} alt="img" src={el.answerImg}/>
                 ) : (
                     el.answer
                 )}
@@ -60,7 +62,7 @@ export const CardsPackTable = () => {
                         alignItems: 'center',
                     }}
                 >
-                    <Rating sx={{padding:"15px"}} name="read-only" value={el.grade} readOnly />
+                    <Rating sx={{padding: "15px"}} name="read-only" value={el.grade} readOnly/>
                     {isMe && (
                         <span
                             style={{
@@ -71,13 +73,19 @@ export const CardsPackTable = () => {
                             }}
                         >
               <IconButton
-                  sx={{padding:"15px"}}
-                  onClick={()=> {}}
+                  sx={{padding: "15px"}}
+                  onClick={showModal('edit', {
+                      _id: el._id,
+                      answer: el.answer,
+                      question: el.question,
+                      questionImg: el.questionImg,
+                      answerImg: el.answerImg,
+                  })}
               >
-                <BorderColorOutlinedIcon />
+                <BorderColorOutlinedIcon/>
               </IconButton>
-              <IconButton onClick={()=> {}}>
-                <DeleteOutlinedIcon />
+              <IconButton onClick={showModal('delete', el)}>
+                <DeleteOutlinedIcon/>
               </IconButton>
             </span>
                     )}
@@ -88,9 +96,10 @@ export const CardsPackTable = () => {
 
     return (
         <>
-        <TableContent headerCells={headCells} sortTableHandler={()=>{}} status={status}>
-            {packCardsItem}
-        </TableContent>
+            <TableContent headerCells={headCells} sortTableHandler={() => {
+            }} status={status}>
+                {packCardsItem}
+            </TableContent>
         </>
     )
 }
