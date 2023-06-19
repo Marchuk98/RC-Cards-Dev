@@ -1,6 +1,5 @@
 import {createAsyncThunk, createSlice, PayloadAction} from '@reduxjs/toolkit';
 import {appActions} from "../../app/app.slice.ts";
-import {errorUtils} from "../../common/utils/error-utils.ts";
 import {
     authApi,
     ForgotEmailDataType,
@@ -113,7 +112,7 @@ const forgot = createAsyncThunk(
 )
 const newPassword = createAsyncThunk(
     "auth/newPassword",
-    async (data: NewPasswordDataType, {dispatch, rejectWithValue}) => {
+    async (data: NewPasswordDataType, {rejectWithValue}) => {
         try {
             const response = await authApi.setNewPassword(data)
             return {...response.data, isNewPasswordSet: true}

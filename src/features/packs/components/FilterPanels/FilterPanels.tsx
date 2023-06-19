@@ -8,15 +8,19 @@ import {Filters} from "../../../../common/components/Filters/Filters.tsx";
 import {InputSearch} from "../../../../common/components/InputSearch/InputSearch.tsx";
 import {Reset} from "../../../../common/components/ResetButton/Reset.tsx";
 import {SubHeader} from "../../../../common/components/SubHeader/SubHeader.tsx";
+import {useModals} from "../../../modals/hooks/useModals.ts";
+import {getPacks, packActions} from "../packs/pack-listSlice.ts";
 import {
     maxParams,
     minParams,
     packListMaxCardsCount,
-    packListMinCardsCount, packListPage, packListPageCount,
+    packListMinCardsCount,
+    packListPage,
+    packListPageCount,
     packListStatus,
-    packNameParams, userIdParams
+    packNameParams,
+    userIdParams
 } from "../packs/selectors.ts";
-import {addPack, getPacks, packActions} from "../packs/pack-listSlice.ts";
 
 export const FilterPanels = () => {
     const dispatch = useAppDispatch()
@@ -54,9 +58,8 @@ export const FilterPanels = () => {
         dispatch(packActions.resetQueryParams())
         toast.warning("Filters reset")
     }
-    const onAddPack = () =>{
-        dispatch(addPack({cardsPack: {name:"sdhglajdsf;"}})).unwrap().then(()=>toast.success("Pack added"))
-    }
+    const { showModal } = useModals()
+
     return (
         <Filters>
             <SubHeader
@@ -64,7 +67,7 @@ export const FilterPanels = () => {
                 title={'Pack list'}
                 titleButton={'Add new pack'}
                 disabled={status === 'loading'}
-                onClick={onAddPack}
+                onClick={showModal('add', {})}
             />
             <InputSearch onChangeValue={onSearchChange} searchValue={packName}/>
             <ButtonsGroup

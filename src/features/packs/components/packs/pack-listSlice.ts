@@ -58,7 +58,6 @@ export const addPack = createAsyncThunk<void, AddPackRequestType, ThunkAPIType>(
     async (data, { dispatch, rejectWithValue }) => {
         try {
             await packAPI.addPack(data)
-
             dispatch(getPacks())
         } catch (e) {
             const error = errorUtils(e)
