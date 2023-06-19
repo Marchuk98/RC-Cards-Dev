@@ -2,6 +2,7 @@ import {NavigateToBack} from "../../../../common/components/NavigateToBack/Navig
 import {useFetchCard} from "../../hooks/useFetchCard.ts";
 import {CardsPackTable} from "../cardsPackTable/CardsPackTable.tsx";
 import {FilterPanelsCards} from "../filterPanels/FilterPanelsCards.tsx";
+import {Modals} from "../modals/Modals.tsx";
 import {PanelsCards} from "../panels/PanelsCards.tsx";
 
 export const Cards = () => {
@@ -15,6 +16,7 @@ export const Cards = () => {
             <FilterPanelsCards/>
             <CardsPackTable/>
             <PanelsCards/>
+            <Modals/>
         </div>
     )
 };
