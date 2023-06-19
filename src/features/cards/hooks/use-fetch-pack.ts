@@ -1,15 +1,15 @@
-import { useEffect } from 'react'
+import {useEffect} from 'react'
 
-import { useParams } from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 
 import {useAppDispatch, useAppSelector} from "../../../app/hooks.ts";
-import {packQuestionParams, pageCountParams, pageParams, sortPacksParams} from "../components/cards/cardSelectors.ts";
+import {cardQuestionParams, pageCountParams, pageParams, sortPacksParams} from "../components/cards/cardSelectors.ts";
 import {getCards, packCardsActions} from "../components/cards/pack-cardSlice.ts";
 
 export const useFetchPack = () => {
     const pageParam = useAppSelector(pageParams)
     const pageCountParam = useAppSelector(pageCountParams)
-    const searchValue = useAppSelector(packQuestionParams)
+    const searchValue = useAppSelector(cardQuestionParams)
     const onSortCardsTable = useAppSelector(sortPacksParams)
 
     const dispatch = useAppDispatch()

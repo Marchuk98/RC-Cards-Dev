@@ -8,6 +8,7 @@ const cardUserId = (state:RootState) => state.packCardsReducer.queryParams.cards
 const cardStatus = (state:RootState) => state.packCardsReducer.status
 const cardPackUserId = (state:RootState) => state.packCardsReducer.packCards.packUserId
 const cardsTotalCount = (state:RootState) => state.packCardsReducer.packCards.cardsTotalCount
+const packDeckCover = (state: RootState) => state.packCardsReducer.packCards.packDeckCover
 
 export {
     cardPackCardItem,
@@ -17,5 +18,6 @@ export {
     cardStatus,
     cardPageCount,
     cardPackUserId,
-    cardsTotalCount
+    cardsTotalCount,
+    packDeckCover
 }
