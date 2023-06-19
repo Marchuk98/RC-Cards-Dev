@@ -39,6 +39,7 @@ export const FilterPanels = () => {
     useEffect(() => {
         dispatch(getPacks())
     }, [packName, max, min, user_id])
+
     const onSearchChange = (search: string) => {
         dispatch(packActions.setQueryParams({packName: search}))
     }
