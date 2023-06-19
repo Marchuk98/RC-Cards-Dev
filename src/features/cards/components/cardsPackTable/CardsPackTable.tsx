@@ -31,7 +31,7 @@ export const CardsPackTable = () => {
                         textOverflow: ' ellipsis',
                     }}
                 >
-                    {el.questionImg ? (
+                    {el.questionImg!=="no_image"&&el.questionImg!== undefined && el.questionImg !== "" ? (
                         <img style={{ height: '35px', marginLeft: '20px' }} alt="img" src={el.questionImg} />
                     ) : (
                         el.question
@@ -39,7 +39,7 @@ export const CardsPackTable = () => {
                 </div>
             </TableCell>
             <TableCell align="left">
-                {el.answerImg ? (
+                {el.answerImg!=="no_image"&&el.answerImg !== undefined && el.answerImg !== "" ? (
                     <img style={{ height: '35px', marginLeft: '20px' }} alt="img" src={el.answerImg} />
                 ) : (
                     el.answer
