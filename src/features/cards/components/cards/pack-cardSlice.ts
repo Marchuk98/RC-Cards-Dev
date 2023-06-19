@@ -1,10 +1,10 @@
 import {createAsyncThunk, createSlice, isFulfilled, isPending, isRejected, PayloadAction} from "@reduxjs/toolkit";
-import {StatusType} from "../../../../common/type/types.ts";
 import {RootState} from "../../../../app/store.ts";
-import {learnActions} from "../../../learn/learn-slice.ts";
-import {CardQueryParams, CardsResponseType} from "./types.ts";
-import {packCardsApi} from "./packCards-api.ts";
+import {StatusType} from "../../../../common/type/types.ts";
 import {errorUtils} from "../../../../common/utils/error-utils.ts";
+import {learnActions} from "../../../learn/learn-slice.ts";
+import {packCardsApi} from "./packCards-api.ts";
+import {CardQueryParams, CardsResponseType, UpdateCardRequestType} from "./types.ts";
 
 type ThunkAPIType = {
     rejectValue: string
@@ -59,6 +59,54 @@ export const getCards  = createAsyncThunk<CardsResponseType,{ cardsPack_id: stri
             return rejectWithValue(error)
         }
 })
+export const addCard = createAsyncThunk<void, AddCardRequestType, ThunkAPIType>(
+    'pack/add-card',
+    async (data, { dispatch, getState, rejectWithValue }) => {
+        const cardsPack_id = getState().packCardsReducer.queryParams.cardsPack_id
+
+        try {
+            await packCardsApi.addCard(data)
+
+            dispatch(getCards({ cardsPack_id }))
+        } catch (e) {
+            const error = errorUtils(e)
+
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const updateCard = createAsyncThunk<void, UpdateCardRequestType, ThunkAPIType>(
+    'pack/update-card',
+    async (data, { rejectWithValue, dispatch, getState }) => {
+        const cardsPack_id = getState().packCardsReducer.queryParams.cardsPack_id
+
+        try {
+            await packCardsApi.updateCard(data)
+            dispatch(getCards({ cardsPack_id }))
+        } catch (e) {
+            const error = errorUtils(e)
+
+            return rejectWithValue(error)
+        }
+    }
+)
+
+export const deleteCard = createAsyncThunk<void, string, ThunkAPIType>(
+    'pack/delete-card',
+    async (id: string, { rejectWithValue, dispatch, getState }) => {
+        const cardsPack_id = getState().packCardsReducer.queryParams.cardsPack_id
+
+        try {
+            await packCardsApi.deleteCard(id)
+            dispatch(getCards({ cardsPack_id }))
+        } catch (e) {
+            const error = errorUtils(e)
+
+            return rejectWithValue(error)
+        }
+    }
+)
 const pending = isPending(getCards)
 const fulfilled = isFulfilled(getCards)
 const rejected = isRejected(getCards)
