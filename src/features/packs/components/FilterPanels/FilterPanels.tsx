@@ -2,6 +2,7 @@ import {useEffect} from "react";
 import {toast} from "react-toastify";
 // import {useParams} from "react-router-dom";
 import {useAppDispatch, useAppSelector} from "../../../../app/hooks.ts";
+import {getProfile} from "../../../../app/selectors/selectors.ts";
 import {ButtonsGroup} from "../../../../common/components/ButtonsGroup/ButtonsGroup.tsx";
 import {CustomSlider} from "../../../../common/components/CustomSlider/CustomSlider.tsx";
 import {Filters} from "../../../../common/components/Filters/Filters.tsx";
@@ -31,7 +32,7 @@ export const FilterPanels = () => {
     const min = useAppSelector(minParams)
     const max = useAppSelector(maxParams)
     const status = useAppSelector(packListStatus)
-    const {_id: userId} = useAppSelector(state => state.profileReducer.profile)
+    const {_id:userId} = useAppSelector(getProfile)
     const pageCount = useAppSelector(packListPageCount)
     const page = useAppSelector(packListPage)
     const user_id = useAppSelector(userIdParams)
